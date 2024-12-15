@@ -1,12 +1,12 @@
 import axios from "axios";
-const url = "https://a6d31eff8e037611.mokky.dev/products";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = {
   getProducts: async () => {
-    const res = await axios.get(url);
-    return res;
+    const { data } = await axios.get(`${BACKEND_URL}/products`);
+    return data;
   },
   getProduct: async (id: string) => {
-    const res = await axios.get(`${url}?id=${id}`);
+    const res = await axios.get(`${BACKEND_URL}/products/${id}`);
     return res;
   },
   getCategories: async () => {
@@ -19,9 +19,27 @@ export const api = {
     };
   },
   createProduct: async (prdct: Object) => {
-    await axios.post(url, prdct);
+    await axios.post(`${BACKEND_URL}/products`, prdct);
   },
   deleteProduct: async (id: string) => {
-    await axios.delete(`${url}/${id}`);
+    await axios.delete(`${BACKEND_URL}/products/${id}`);
+  },
+  // User ACTIONS
+  registerUser: async (user: Object) => {
+    return await axios.post(`${BACKEND_URL}/users/register`, user);
+  },
+  loginUser: async (user: Object) => {
+    return await axios.post(`${BACKEND_URL}/users/login`, user);
+  },
+  addProductToCart: async (product: Product, userId: string | undefined) => {
+    return await axios.put(`${BACKEND_URL}/users/${userId}/cart`, product);
+  },
+  deleteProductFromCart: async (
+    productId: string,
+    userId: string | undefined
+  ) => {
+    return await axios.delete(
+      `${BACKEND_URL}/users/${userId}/cart/${productId}`
+    );
   },
 };

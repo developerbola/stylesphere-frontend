@@ -6,7 +6,7 @@ const Hero = () => {
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const getAllProducts = async () => {
-      const { data } = await api.getProducts();
+      const data = await api.getProducts();
       setProducts(data.slice(0, 2));
     };
     getAllProducts();
@@ -15,7 +15,9 @@ const Hero = () => {
     <div className="h-screen flex items-center px-16">
       <div className="h-full w-[50%] flex flex-col gap-3 justify-center">
         <h1 className="text-[4rem] font-extrabold w-[90%]">
-          Choose <span className="bg-black text-white px-3 rounded-2xl">Your</span> Trendy Collection
+          Choose{" "}
+          <span className="bg-black text-white px-3 rounded-2xl">Your</span>{" "}
+          Trendy Collection
         </h1>
         <div className="flex items-center gap-4 w-[60%] pl-3">
           <div className="h-[80%] w-[18px] rounded-lg bg-gray-900"></div>
@@ -54,21 +56,11 @@ const Hero = () => {
                 }}
                 key={index}
               >
-                <a href={`/products/${product.id}`}>
-                  <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 rounded-xl text-white z-10">
+                <a href={`/products/${product._id}`} className="w-2/3">
+                  <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
                     Discover
                   </button>
                 </a>
-                <button className="flex gap-2 items-center opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 rounded-xl text-white z-10">
-                  Add
-                  <img
-                    src="/cart.svg"
-                    alt="cart icon"
-                    height={15}
-                    width={15}
-                    style={{ filter: "invert(1)" }}
-                  />
-                </button>
               </div>
             );
           })

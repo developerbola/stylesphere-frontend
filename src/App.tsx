@@ -7,20 +7,36 @@ import {
   Login,
   SignUp,
   Product,
+  Profile,
 } from "./pages/pages";
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Context } from "./context/context";
+import {  ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store/store";
+import { fetchUser } from "./features/user/userSlice";
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
-  const path = window.location.pathname;
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, status, error } = useSelector((state: RootState) => state.user);
 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchUser());
+    }
+  }, [dispatch, status]);
+
+  const path = window.location.pathname;
   const layoutPaths = [
     "/",
     "/about",
     "/products",
     "/products/:id",
     "/customer-service",
+    "/profile",
   ];
 
   const doesPathMatch = (path: string, routes: string[]) => {
@@ -31,28 +47,28 @@ const App = () => {
   };
   return (
     <>
-      {doesPathMatch(path, layoutPaths) && (
-        <>
-          <Navbar setCartToggle={setCartToggle} />
-          <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
-        </>
-      )}
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<Product />} />
-          <Route path="/customer-service" element={<CustomerService />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </main>
-      {doesPathMatch(path, layoutPaths) && (
-        <>
-          <Footer />
-        </>
-      )}
+      <Context.Provider value={{ user }}>
+        {doesPathMatch(path, layoutPaths) && (
+          <>
+            <Navbar setCartToggle={setCartToggle} />
+            <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
+          </>
+        )}
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<Product />} />
+            <Route path="/customer-service" element={<CustomerService />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+          <ToastContainer autoClose={1500} position="top-center" />
+        </main>
+        {doesPathMatch(path, layoutPaths) && <Footer />}
+      </Context.Provider>
     </>
   );
 };

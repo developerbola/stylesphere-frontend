@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../context/context";
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [logout, setLogout] = useState(false);
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-
+  const { user } = useContext(Context);
   return (
     <nav className="fixed w-full z-999 top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-10 py-6">
@@ -18,14 +18,25 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
         </a>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className="flex gap-4">
-            <a href="/login" className="sm:flex vxs:hidden">
-              <button
-                type="button"
-                className="text-gray-900 bg-transparent hover:bg-gray-900 hover:text-white hover:outline-none outline font-medium rounded-lg text-sm px-6 py-2 text-center"
-              >
-                Login
-              </button>
-            </a>
+            {user ? (
+              <a href="/profile">
+                <button
+                  className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
+                  onClick={() => setLogout(!logout)}
+                >
+                  {user.name[0]}
+                </button>
+              </a>
+            ) : (
+              <a href="/login" className="sm:flex vxs:hidden">
+                <button
+                  type="button"
+                  className="text-gray-900 bg-transparent hover:bg-gray-900 hover:text-white hover:outline-none outline font-medium rounded-lg text-sm px-6 py-2 text-center"
+                >
+                  Login
+                </button>
+              </a>
+            )}
             <button className="text-black" onClick={() => setCartToggle(true)}>
               <img src="/cart.svg" alt="cart icon" height={25} width={25} />
             </button>

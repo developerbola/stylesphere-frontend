@@ -1,71 +1,97 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../context/context";
+import { api } from "../api/api";
+import { toast } from "react-toastify";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
-  const [count, setCount] = useState(1);
-  const cartAdded = [
-    {
-      id: 1,
-      name: "T-Shirt",
-      price: 55,
-      quantity: 1,
-      img: "/category/clothe.jpg",
-    },
-  ];
+  const { user } = useContext(Context);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (user?.cart) {
+      setProducts(user.cart);
+    }
+  }, [user, cartToggle]);
+  const totalPrice = products.reduce(
+    (total, product) => total + product.price,
+    0
+  );
+  const handleDeleteProduct = async (productId: string) => {
+    try {
+      await api.deleteProductFromCart(productId, user?._id);
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product._id !== productId)
+      );
+      toast.warn("Product deleted from cart");
+    } catch (error: any) {
+      toast.error(
+        `Error deleting product from cart: ${error.response?.data?.message}`
+      );
+    }
+  };
+
   return (
     <div
-      className={`transition-all duration-500 ${
-        cartToggle ? "right-0" : "-right-[29%]"
+      className={`border-l transition-all duration-500 ${
+        cartToggle ? "right-0" : "-right-[30%]"
       } fixed  bg-[#ffffffcc] backdrop-blur-[15px] h-screen w-[29%] p-[30px] z-[99999]`}
       onMouseEnter={() => setCartToggle(true)}
       onMouseLeave={() => setCartToggle(false)}
     >
-      <div className="flex justify-between items-center">
-        <h1 className="flex gap-2 items-center text-[1.5rem] font-[600]">
-          My Cart <img src="/cart.svg" alt="cart icon" height={20} width={20} />
-        </h1>
-        <h1 className="text-[1.5rem]">${count * cartAdded[0].price}</h1>
-      </div>
-      <div className="flex flex-col gap-2 mt-5">
-        {cartAdded.map((item) => {
-          return (
-            <div key={item.id} className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-[40px] h-[40px] object-cover rounded-md"
-                />
-                <h1 className="text-[1.3rem]">{item.name}</h1>
-              </div>
-              <div className="flex gap-5">
-                <div className="flex gap-2 text-[1.3rem] select-none">
-                  <button
-                    onClick={() => {
-                      if (count == 1) {
-                        confirm("Do you want to delete this item?") &&
-                          setCount(count - 1);
-                      } else {
-                        setCount(count - 1);
-                      }
-                    }}
-                    className="flex items-center bg-gray-100 px-2 rounded-md"
+      {!user ? (
+        <div className="h-full w-full flex flex-col items-center justify-center">
+          <h1 className="text-center font-bold text-lg">Unautharized</h1>
+          <p className="text-center text-sm">
+            Please{" "}
+            <a href="/login" className="text-primary-600 underline">
+              login
+            </a>{" "}
+            to see your cart.
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="flex justify-between items-center">
+            <h1 className="flex gap-2 items-center text-[1.5rem] font-[600]">
+              My Cart{" "}
+              <img src="/cart.svg" alt="cart icon" height={20} width={20} />
+            </h1>
+            <h1 className="text-[1.5rem]">${totalPrice}</h1>
+          </div>
+          <div className="flex flex-col gap-2 mt-5">
+            {products.length ? (
+              products.map((item: Product, index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between"
                   >
-                    -
-                  </button>
-                  <h1>{count}</h1>
-                  <button
-                    onClick={() => setCount(count + 1)}
-                    className="flex items-center bg-gray-100 px-2 rounded-md"
-                  >
-                    +
-                  </button>
-                </div>
-                <h1 className="text-[1.3rem]">${item.price * count}</h1>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-[40px] h-[40px] object-cover rounded-md"
+                      />
+                      <h1 className="text-[1.3rem]">{item.name}</h1>
+                    </div>
+                    <div className="flex gap-5">
+                      <h1 className="text-[1.3rem]">${item.price}</h1>
+                      <button
+                        className="p-1 px-4 bg-red-600 text-white rounded-md"
+                        onClick={() => handleDeleteProduct(item._id)}
+                      >
+                        del
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <h1>No Product in your cart</h1>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,4 +1,32 @@
+import { useState } from "react";
+import { api } from "../api/api";
+import Cookies from "js-cookie";
 const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const user = {
+      email,
+      password,
+    };
+    try {
+      setLoading(true);
+      const { data: loginData } = await api.loginUser(user);
+      const { token } = loginData;
+      Cookies.set("token", token, { expires: 7 });
+      window.location.href = "/";
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      setError(error.response.data.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
       <a
@@ -13,7 +41,7 @@ const Login = () => {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl mb-2">
             Sign in to your account
           </h1>
-          <form className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
                 Your Email
@@ -24,6 +52,8 @@ const Login = () => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 placeholder="youremail@icloud.com"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 required
               />
             </div>
@@ -37,12 +67,21 @@ const Login = () => {
                 id="password"
                 placeholder="••••••••"
                 className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
                 required
               />
             </div>
             <button className="w-full bg-gray-900 text-white bg-primary-600 hover:bg-primary-700 active:scale-95 transition-transform font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-              Sign in
+              {loading ? "Signing In..." : "Sign In"}
             </button>
+            <div
+              className={`${
+                error ? "flex" : "hidden"
+              } bg-red-500 p-3 rounded-lg`}
+            >
+              <p className="text-white">{error}</p>
+            </div>
             <p className="text-sm font-light text-gray-900">
               Don’t have an account yet?{" "}
               <a

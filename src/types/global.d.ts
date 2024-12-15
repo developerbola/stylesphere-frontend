@@ -3,9 +3,8 @@ declare global {
     name: string;
     image: string;
     price: number;
-    id: string;
+    _id: string;
   }
-
   interface Category {
     name: string;
     image: string;
@@ -16,6 +15,21 @@ declare global {
   }
   interface NavbarProps {
     setCartToggle: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+  interface User {
+    createdAt: string;
+    email: string;
+    name: string;
+    cart: Product[];
+    password: string;
+    updatedAt: string;
+    __v: number;
+    _id: string;
+  }
+  interface UserState {
+    user: User | null;
+    status: "idle" | "loading" | "succeeded" | "failed";
+    error: string | null;
   }
 }
 
