@@ -61,18 +61,18 @@ const Product = () => {
             key={product._id}
             src={product.image}
             alt={`Image of ${product.name}`}
-            className="max-w-[500px] max-h-[500px] w-full h-full object-contain"
+            className="max-w-[375px] max-h-[375px] object-cover"
           />
           <div className="flex justify-between">
             <h1 className="text-2xl">{product.name}</h1>
             <p className="text-2xl">${product.price}</p>
           </div>
-          <div className="flex gap-5">
+          <div className="flex gap-5 justify-end">
             <button
               className="flex gap-2 items-center transition-opacity bg-[#000] text-white backdrop-blur-md p-3 rounded-xl z-10"
               onClick={handleAddToCart}
             >
-              Add
+              Order
               <img
                 src="/cart.svg"
                 alt="cart icon"

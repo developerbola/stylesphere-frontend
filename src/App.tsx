@@ -13,7 +13,7 @@ import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
 import { Context } from "./context/context";
-import {  ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store/store";
@@ -21,13 +21,23 @@ import { fetchUser } from "./features/user/userSlice";
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
-  const { user, status, error } = useSelector((state: RootState) => state.user);
+  const { user, status } = useSelector((state: RootState) => state.user);
 
+  // Fetch user data if status is idle
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchUser());
     }
   }, [dispatch, status]);
+
+  // Save user to localStorage when it changes
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user"); // Clear if user becomes null
+    }
+  }, [user]);
 
   const path = window.location.pathname;
   const layoutPaths = [
@@ -65,7 +75,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
-          <ToastContainer autoClose={1500} position="top-center" />
+          <ToastContainer autoClose={1500} position="bottom-right" />
         </main>
         {doesPathMatch(path, layoutPaths) && <Footer />}
       </Context.Provider>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../context/context";
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                 </button>
               </a>
             )}
-            <button className="text-black" onClick={() => setCartToggle(true)}>
+            <button className="text-black outline-none" onClick={() => setCartToggle(true)}>
               <img src="/cart.svg" alt="cart icon" height={25} width={25} />
             </button>
           </div>

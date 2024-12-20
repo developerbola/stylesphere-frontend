@@ -1,13 +1,13 @@
 import Cookies from "js-cookie";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const initialState: UserState = {
-  user: null,
+  user: JSON.parse(localStorage.getItem("user") || "null"), // Load from localStorage
   status: "idle",
   error: null,
 };
+
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (_, thunkAPI) => {
