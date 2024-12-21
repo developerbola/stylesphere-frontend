@@ -2,19 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../context/context";
 import { api } from "../api/api";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store/store";
-import { fetchUser } from "../features/user/userSlice";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const { user } = useContext(Context);
   const [products, setProducts] = useState<Product[]>([]);
-  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     if (user?.cart) {
       setProducts(user.cart);
     }
-    dispatch(fetchUser());
   }, [user, cartToggle]);
   const totalPrice = products.reduce(
     (total, product) => total + product.price,
@@ -26,7 +21,6 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
       setProducts((prevProducts) =>
         prevProducts.filter((product) => product._id !== productId)
       );
-      dispatch(fetchUser());
       toast.warn("Product deleted from cart");
     } catch (error: any) {
       toast.error(

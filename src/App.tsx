@@ -13,22 +13,37 @@ import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
 import { Context } from "./context/context";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "./store/store";
-import { fetchUser } from "./features/user/userSlice";
+import Cookies from "js-cookie";
+import axios from "axios";
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
-  const dispatch = useDispatch<AppDispatch>();
-  const { user, status } = useSelector((state: RootState) => state.user);
-
+  const [user, setUser] = useState<User | null>(null);
   // Fetch user data if status is idle
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchUser());
-    }
-  }, [dispatch, status]);
+    const fetchUser = async () => {
+      const token = Cookies.get("token");
+      if (!token) return;
+      const savedUser = localStorage.getItem("user");
+      if (savedUser) setUser(JSON.parse(savedUser));
+
+      try {
+        await axios
+          .get(`${import.meta.env.VITE_BACKEND_URL}/users/user`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((res) => {
+            setUser(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data));
+          });
+      } catch (error: any) {
+        console.log("Error fetching user:", error); // Log the error
+        toast.error("Error:", error);
+      }
+    };
+    fetchUser();
+  }, []);
 
   // Save user to localStorage when it changes
   useEffect(() => {

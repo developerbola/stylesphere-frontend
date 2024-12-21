@@ -19,14 +19,22 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className="flex gap-4">
             {user ? (
-              <a href="/profile">
+              <div className="flex gap-3">
+                <a href="/profile">
+                  <button
+                    className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
+                    onClick={() => setLogout(!logout)}
+                  >
+                    {user.name[0]}
+                  </button>
+                </a>
                 <button
-                  className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
-                  onClick={() => setLogout(!logout)}
+                  className="text-black outline-none"
+                  onClick={() => setCartToggle(true)}
                 >
-                  {user.name[0]}
+                  <img src="/cart.svg" alt="cart icon" height={25} width={25} />
                 </button>
-              </a>
+              </div>
             ) : (
               <a href="/login" className="sm:flex vxs:hidden">
                 <button
@@ -37,9 +45,6 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                 </button>
               </a>
             )}
-            <button className="text-black outline-none" onClick={() => setCartToggle(true)}>
-              <img src="/cart.svg" alt="cart icon" height={25} width={25} />
-            </button>
           </div>
           <button
             onClick={handleToggle}

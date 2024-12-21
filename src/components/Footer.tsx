@@ -55,10 +55,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://instagram.com/developerbola"
+                    href="https://t.me/developersStory"
                     className="hover:underline"
                   >
-                    Instagram
+                    Telegram
                   </a>
                 </li>
               </ul>
