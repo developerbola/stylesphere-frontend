@@ -17,42 +17,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { api } from "./api/api";
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | Promise<void>>(null);
   // Fetch user data if status is idle
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = Cookies.get("token");
-      if (!token) return;
-      const savedUser = localStorage.getItem("user");
-      if (savedUser) setUser(JSON.parse(savedUser));
-
-      try {
-        await axios
-          .get(`${import.meta.env.VITE_BACKEND_URL}/users/user`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((res) => {
-            setUser(res.data);
-            localStorage.setItem("user", JSON.stringify(res.data));
-          });
-      } catch (error: any) {
-        console.log("Error fetching user:", error); // Log the error
-        toast.error("Error:", error);
-      }
-    };
-    fetchUser();
+    setUser(api.fetchUser());
   }, []);
-
-  // Save user to localStorage when it changes
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user"); // Clear if user becomes null
-    }
-  }, [user]);
 
   const path = window.location.pathname;
   const layoutPaths = [

@@ -1,4 +1,6 @@
+import Cookies from "js-cookie";
 import axios from "axios";
+import { toast } from "react-toastify";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = {
   getProducts: async () => {
@@ -41,5 +43,20 @@ export const api = {
     return await axios.delete(
       `${BACKEND_URL}/users/${userId}/cart/${productId}`
     );
+  },
+  fetchUser: async () => {
+    const token = Cookies.get("token");
+    if (!token) return;
+    try {
+      await axios
+        .get(`${import.meta.env.VITE_BACKEND_URL}/users/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          return res.data;
+        });
+    } catch (error: any) {
+      toast.error("Error:", error);
+    }
   },
 };

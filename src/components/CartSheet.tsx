@@ -7,7 +7,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const { user } = useContext(Context);
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
-    if (user?.cart) {
+    if (user?.cart.length) {
       setProducts(user.cart);
     }
   }, [user, cartToggle]);
