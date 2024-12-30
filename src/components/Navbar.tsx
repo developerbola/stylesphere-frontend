@@ -1,10 +1,11 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { useUser } from "../context/UserProvider";
 
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
-  const [user, setUser] = useState<User | null | undefined>();
+  const { user } = useUser();
   const token = Cookies.get("token");
   const handleToggle = () => {
     setIsOpen(!isOpen);

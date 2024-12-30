@@ -11,10 +11,10 @@ import {
 } from "./pages/pages";
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { api } from "./api/api";
+import { UserProvider } from "./context/UserProvider";
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
   const path = window.location.pathname;
@@ -34,7 +34,7 @@ const App = () => {
     });
   };
   return (
-    <>
+    <UserProvider>
       {doesPathMatch(path, layoutPaths) && (
         <>
           <Navbar setCartToggle={setCartToggle} />
@@ -55,7 +55,7 @@ const App = () => {
         <ToastContainer autoClose={1500} position="bottom-right" />
       </main>
       {doesPathMatch(path, layoutPaths) && <Footer />}
-    </>
+    </UserProvider>
   );
 };
 
