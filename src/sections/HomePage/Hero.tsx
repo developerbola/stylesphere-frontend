@@ -6,8 +6,12 @@ const Hero = () => {
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     const getAllProducts = async () => {
-      const data = await api.getProducts();
-      setProducts(data.slice(0, 2));
+      try {
+        const data = await api.getProducts();
+        setProducts(data.slice(0, 2));
+      } catch (err) {
+        console.log(err);
+      }
     };
     getAllProducts();
   }, []);

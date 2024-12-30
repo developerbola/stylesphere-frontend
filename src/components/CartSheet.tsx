@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../context/context";
+import { useEffect, useState } from "react";
 import { api } from "../api/api";
 import { toast } from "react-toastify";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
-  const { user } = useContext(Context);
+  const [user, setUser] = useState<User | null | undefined>();
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
-    if (user?.cart.length) {
+    if (user && "cart" in user && user.cart.length) {
       setProducts(user.cart);
     }
   }, [user, cartToggle]);
@@ -17,7 +16,9 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   );
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await api.deleteProductFromCart(productId, user?._id);
+      await api.deleteProductFromCart(productId, (user as User)?._id);
+      const refreshedUserData = await api.fetchUser();
+      setUser(refreshedUserData);
       setProducts((prevProducts) =>
         prevProducts.filter((product) => product._id !== productId)
       );
@@ -57,7 +58,10 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
             </h1>
             <h1 className="text-[1.5rem]">${totalPrice}</h1>
           </div>
-          <div className="flex flex-col gap-2 mt-5">
+          <div
+            className="flex flex-col gap-2 mt-5 overflow-y-scroll"
+            style={{ maxHeight: "calc(100vh - 200px)" }}
+          >
             {products.length ? (
               products.map((item: Product, index: number) => {
                 return (

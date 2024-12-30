@@ -1,12 +1,15 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../context/context";
+import { useState } from "react";
+import Cookies from "js-cookie";
+
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
+  const [user, setUser] = useState<User | null | undefined>();
+  const token = Cookies.get("token");
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-  const { user } = useContext(Context);
+
   return (
     <nav className="fixed w-full z-999 top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-10 py-6">
@@ -18,21 +21,48 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
         </a>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className="flex gap-4">
-            {user ? (
+            {(user as User) ? (
               <div className="flex gap-3">
                 <a href="/profile">
                   <button
                     className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
                     onClick={() => setLogout(!logout)}
                   >
-                    {user.name[0]}
+                    {(user as User)?.name
+                      ? (user as User).name[0].toUpperCase()
+                      : ""}
                   </button>
                 </a>
                 <button
                   className="text-black outline-none"
                   onClick={() => setCartToggle(true)}
                 >
-                  <img src="/cart.svg" alt="cart icon" height={25} width={25} />
+                  <img
+                    src="/cart.svg"
+                    alt="cart icon"
+                    className="h-[30px] w-[30px]"
+                  />
+                </button>
+              </div>
+            ) : token ? (
+              <div className="flex gap-3">
+                <a href="/profile">
+                  <button
+                    className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
+                    onClick={() => setLogout(!logout)}
+                  >
+                    U
+                  </button>
+                </a>
+                <button
+                  className="text-black outline-none"
+                  onClick={() => setCartToggle(true)}
+                >
+                  <img
+                    src="/cart.svg"
+                    alt="cart icon"
+                    className="h-[30px] w-[30px]"
+                  />
                 </button>
               </div>
             ) : (
@@ -94,7 +124,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                 href="/customer-service"
                 className="block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
               >
-                Customer Sevice
+                Customer Service
               </a>
             </li>
           </ul>

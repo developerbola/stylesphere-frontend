@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../api/api";
 import { Loader } from "../components/components";
-import { Context } from "../context/context";
 import { toast } from "react-toastify";
 
 const Product = () => {
@@ -15,7 +14,8 @@ const Product = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useContext(Context);
+  const [user, setUser] = useState<User | null | undefined>();
+
   useEffect(() => {
     const fetchProduct = async () => {
       if (!id) {
@@ -26,7 +26,7 @@ const Product = () => {
 
       try {
         const res = await api.getProduct(id);
-        setProduct(res.data);
+        setProduct(res?.data);
       } catch (error: any) {
         setError("Error fetching product: " + error.message);
       } finally {
