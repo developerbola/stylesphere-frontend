@@ -54,6 +54,7 @@ const SignUp = () => {
                 placeholder="Your Name"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
+                autoComplete="name"
                 required
               />
             </div>
@@ -74,6 +75,7 @@ const SignUp = () => {
                   setError(null);
                 }}
                 value={email}
+                autoComplete="email"
                 required
               />
               <p className={`${error ? "text-red-500" : "hidden"}`}>{error}</p>

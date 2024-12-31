@@ -56,8 +56,11 @@ export const api = {
   },
   loginUser: async (user: Object) => {
     try {
-      return await axios.post(`${BACKEND_URL}/users/login`, user);
+      const { data } = await axios.post(`${BACKEND_URL}/users/login`, user);
+      Cookies.set("token", data.token, { expires: 7 });
+      return data;
     } catch (error: any) {
+      console.log(error);
       toast.error("Error logging in user: " + error.message);
     }
   },

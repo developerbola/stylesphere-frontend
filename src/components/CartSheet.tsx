@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/api";
 import { toast } from "react-toastify";
+import { useUser } from "../context/UserProvider";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
-  const [user, setUser] = useState<User | null | undefined>();
+  const { user, setUser } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     if (user && "cart" in user && user.cart.length) {
@@ -32,9 +33,9 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
 
   return (
     <div
-      className={`border-l fixed top-0 min-h-screen md:w-[30%] xs:w-[50%] vxs:w-[80%] p-[30px] z-[99999] bg-[#ffffffcc] backdrop-blur-[15px] ${
+      className={`border-l fixed top-0 min-h-screen md:w-[30%] xs:w-[50%] vxs:w-[80%] p-[30px] z-[999] bg-[#ffffffcc] backdrop-blur-[15px] ${
         cartToggle ? "right-0" : "-right-[100%]"
-      } transition-right duration-700`}
+      } transition-right duration-500`}
       onMouseOver={() => setCartToggle(true)}
       onMouseOut={() => setCartToggle(false)}
     >
@@ -80,10 +81,14 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
                     <div className="flex gap-5">
                       <h1 className="text-[1.3rem]">${item.price}</h1>
                       <button
-                        className="p-1 px-4 bg-red-600 text-white rounded-md"
+                        className="h-[30px] w-[30px] bg-red-600 rounded-md flex items-center justify-center"
                         onClick={() => handleDeleteProduct(item._id)}
                       >
-                        del
+                        <img
+                          src="/trash.svg"
+                          alt="trash icon"
+                          className="h-[16px] w-[16px]"
+                        />
                       </button>
                     </div>
                   </div>

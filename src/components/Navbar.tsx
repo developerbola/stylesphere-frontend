@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useUser } from "../context/UserProvider";
+import { Poppins } from "next/font/google";
+const poppins = Poppins({ subsets: ["latin"] });
 
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
               <div className="flex gap-3">
                 <a href="/profile">
                   <button
-                    className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
+                    className={`cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center`}
                     onClick={() => setLogout(!logout)}
                   >
                     {(user as User)?.name
@@ -41,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                   <img
                     src="/cart.svg"
                     alt="cart icon"
-                    className="h-[30px] w-[30px]"
+                    className="h-[32px] w-[32px]"
                   />
                 </button>
               </div>
@@ -62,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                   <img
                     src="/cart.svg"
                     alt="cart icon"
-                    className="h-[30px] w-[30px]"
+                    className="h-[32px] w-[32px]"
                   />
                 </button>
               </div>

@@ -11,7 +11,7 @@ import {
 } from "./pages/pages";
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/UserProvider";
@@ -33,6 +33,14 @@ const App = () => {
       return matcher(path);
     });
   };
+  useEffect(() => {
+    if (cartToggle) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [cartToggle]);
+
   return (
     <UserProvider>
       {doesPathMatch(path, layoutPaths) && (
@@ -52,9 +60,13 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
-        <ToastContainer autoClose={1500} position="bottom-right" />
+        <ToastContainer
+          autoClose={1500}
+          position="bottom-right"
+          className={"z-[1000]"}
+        />
       </main>
-      {doesPathMatch(path, layoutPaths) && <Footer />}
+      {doesPathMatch(path, layoutPaths) && !cartToggle && <Footer />}
     </UserProvider>
   );
 };

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { api } from "../api/api";
 import { Loader } from "../components/components";
 import { toast } from "react-toastify";
+import { useUser } from "../context/UserProvider";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,7 +15,7 @@ const Product = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null | undefined>();
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -40,6 +41,8 @@ const Product = () => {
   const handleAddToCart = async () => {
     try {
       await api.addProductToCart(product, user?._id);
+      const refreshedUserData = await api.fetchUser();
+      setUser(refreshedUserData);
       toast.success("Product added!");
     } catch (error: any) {
       console.error("Error adding product to cart:", error);
@@ -72,7 +75,7 @@ const Product = () => {
               className="flex gap-2 items-center transition-opacity bg-[#000] text-white backdrop-blur-md p-3 rounded-xl z-10"
               onClick={handleAddToCart}
             >
-              Order
+              Add to Cart
               <img
                 src="/cart.svg"
                 alt="cart icon"

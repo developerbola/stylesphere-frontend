@@ -11,7 +11,9 @@ const Footer = () => {
               </span>
             </a>
             <p>
-              StyleSphere - E-Commerce for shopping clothes, shoes and watches. You can easily buy what you want. Make your style, make your dream.
+              StyleSphere - E-Commerce for shopping clothes, shoes and watches.
+              You can easily buy what you want. Make your style, make your
+              dream.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
@@ -69,12 +71,12 @@ const Footer = () => {
               </h2>
               <ul className="text-gray-500 font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="/customer-service" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="/customer-service" className="hover:underline">
                     Terms &amp; Conditions
                   </a>
                 </li>

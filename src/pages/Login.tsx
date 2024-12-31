@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { api } from "../api/api";
-import Cookies from "js-cookie";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = {
@@ -15,13 +14,13 @@ const Login = () => {
     };
     try {
       setLoading(true);
-      const { data: loginData } = await api.loginUser(user);
-      const { token } = loginData;
-      Cookies.set("token", token, { expires: 7 });
+      await api.loginUser(user);
       window.location.href = "/";
     } catch (error: any) {
-      console.log(error.response.data.message);
-      setError(error.response.data.message);
+      console.error("Error during login:", error);
+      setError(
+        error?.response?.data?.message ?? "An unexpected error occurred"
+      );
     } finally {
       setLoading(false);
     }
