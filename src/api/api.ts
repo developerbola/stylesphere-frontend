@@ -57,6 +57,8 @@ export const api = {
     try {
       const { data } = await axios.post(`${BACKEND_URL}/users/login`, user);
       Cookies.set("token", data.token, { expires: 7 });
+      console.log(data);
+
       return data;
     } catch (error: any) {
       console.log(error);
@@ -92,7 +94,9 @@ export const api = {
       );
       return res.data; // Return the fetched user data
     } catch (error: any) {
-      return null; // Return null in case of error
+      console.log(error);
+      return null;
+      // Return null in case of error
     }
   },
 };

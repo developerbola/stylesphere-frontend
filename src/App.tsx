@@ -8,11 +8,13 @@ import {
   SignUp,
   Product,
   Profile,
+  NotFound,
+  Dashboard,
 } from "./pages/pages";
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
-import { UserProvider } from "./context/UserProvider";
+import { UserProvider, useUser } from "./context/UserProvider";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
@@ -33,6 +35,7 @@ const App = () => {
       return matcher(path);
     });
   };
+
   useEffect(() => {
     if (cartToggle) {
       document.body.classList.add("overflow-hidden");
@@ -43,9 +46,13 @@ const App = () => {
 
   return (
     <UserProvider>
-      {doesPathMatch(path, layoutPaths) && (
+      {doesPathMatch(path, [...layoutPaths, "/dashboard"]) && (
         <>
           <Navbar setCartToggle={setCartToggle} />
+        </>
+      )}
+      {doesPathMatch(path, layoutPaths) && (
+        <>
           <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
         </>
       )}
@@ -56,9 +63,11 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<Product />} />
           <Route path="/customer-service" element={<CustomerService />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
       <Toaster />

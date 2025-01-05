@@ -17,8 +17,9 @@ const SignUp = () => {
     try {
       setLoading(true);
       await api.registerUser(user);
-      const { data: loginData } = await api.loginUser({ email, password });
-      const { token } = loginData;
+      const { token } = await api.loginUser({ email, password });
+      console.log(token);
+
       Cookies.set("token", token, { expires: 7 });
       window.location.href = "/";
     } catch (error: any) {

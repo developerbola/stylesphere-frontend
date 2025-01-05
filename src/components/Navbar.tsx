@@ -9,6 +9,8 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+  const links = ["About", "Products", "Customer Service"];
+  const adminLinks = [...links, "Dashboard"];
 
   return (
     <nav className="fixed w-full z-999 top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
@@ -103,30 +105,19 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
           } w-full md:flex md:w-auto md:order-1`}
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-            <li>
-              <a
-                href="/about"
-                className="block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
-              >
-                About US
-              </a>
-            </li>
-            <li>
-              <a
-                href="/products"
-                className="block py-2 px-3 text-gray-900 rounded md:bg-transparent md:p-0"
-              >
-                Products
-              </a>
-            </li>
-            <li>
-              <a
-                href="/customer-service"
-                className="block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
-              >
-                Customer Service
-              </a>
-            </li>
+            {(user?._id == import.meta.env.VITE_ADMIN_ID
+              ? adminLinks
+              : links
+            ).map((link) => (
+              <li key={link}>
+                <a
+                  href={link.split(" ").join("-").toLowerCase()}
+                  className="block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
+                >
+                  {link}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
