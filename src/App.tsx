@@ -12,9 +12,9 @@ import {
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/UserProvider";
+import { Toaster } from "react-hot-toast";
+
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
   const path = window.location.pathname;
@@ -60,12 +60,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>
-        <ToastContainer
-          autoClose={1500}
-          position="bottom-right"
-          className={"z-[1000]"}
-        />
       </main>
+      <Toaster />
       {doesPathMatch(path, layoutPaths) && !cartToggle && <Footer />}
     </UserProvider>
   );

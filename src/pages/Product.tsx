@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../api/api";
 import { Loader } from "../components/components";
-import { toast } from "react-toastify";
 import { useUser } from "../context/UserProvider";
+import toast from "react-hot-toast";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +12,7 @@ const Product = () => {
     image: "",
     price: 0,
     _id: "",
+    category: "",
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,10 +44,9 @@ const Product = () => {
       await api.addProductToCart(product, user?._id);
       const refreshedUserData = await api.fetchUser();
       setUser(refreshedUserData);
-      toast.success("Product added!");
+      toast.success("Product added to cart");
     } catch (error: any) {
       console.error("Error adding product to cart:", error);
-      toast.error("Error adding product to cart: " + error.message);
     }
   };
 

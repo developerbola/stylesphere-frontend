@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/api";
-import { toast } from "react-toastify";
 import { useUser } from "../context/UserProvider";
+import toast from "react-hot-toast";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const { user, setUser } = useUser();
@@ -18,14 +18,16 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const handleDeleteProduct = async (productId: string) => {
     try {
       await api.deleteProductFromCart(productId, (user as User)?._id);
+
       const refreshedUserData = await api.fetchUser();
       setUser(refreshedUserData);
       setProducts((prevProducts) =>
         prevProducts.filter((product) => product._id !== productId)
       );
-      toast.warn("Product deleted from cart");
+
+      toast.success(`Product deleted from cart`);
     } catch (error: any) {
-      toast.error(
+      console.error(
         `Error deleting product from cart: ${error.response?.data?.message}`
       );
     }

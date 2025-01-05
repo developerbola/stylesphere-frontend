@@ -1,9 +1,6 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useUser } from "../context/UserProvider";
-import { Poppins } from "next/font/google";
-const poppins = Poppins({ subsets: ["latin"] });
-
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);

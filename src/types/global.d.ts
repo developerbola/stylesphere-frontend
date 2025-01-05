@@ -4,6 +4,7 @@ declare global {
     image: string;
     price: number;
     _id: string;
+    category: string;
   }
   interface Category {
     name: string;

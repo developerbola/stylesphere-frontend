@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
 import axios from "axios";
-import { toast } from "react-toastify";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = {
   getProducts: async () => {
@@ -8,7 +7,7 @@ export const api = {
       const { data } = await axios.get(`${BACKEND_URL}/products`);
       return data;
     } catch (error: any) {
-      toast.error("Error fetching products: " + error.message);
+      console.log("Error fetching products: " + error.message);
     }
   },
   getProduct: async (id: string) => {
@@ -16,7 +15,7 @@ export const api = {
       const res = await axios.get(`${BACKEND_URL}/products/${id}`);
       return res;
     } catch (error: any) {
-      toast.error("Error fetching product: " + error.message);
+      console.log("Error fetching product: " + error.message);
     }
   },
   getCategories: async () => {
@@ -29,21 +28,21 @@ export const api = {
         ],
       };
     } catch (error: any) {
-      toast.error("Error fetching categories: " + error.message);
+      console.log("Error fetching categories: " + error.message);
     }
   },
   createProduct: async (prdct: Object) => {
     try {
       await axios.post(`${BACKEND_URL}/products`, prdct);
     } catch (error: any) {
-      toast.error("Error creating product: " + error.message);
+      console.log("Error creating product: " + error.message);
     }
   },
   deleteProduct: async (id: string) => {
     try {
       await axios.delete(`${BACKEND_URL}/products/${id}`);
     } catch (error: any) {
-      toast.error("Error deleting product: " + error.message);
+      console.log("Error deleting product: " + error.message);
     }
   },
   // User ACTIONS
@@ -51,7 +50,7 @@ export const api = {
     try {
       return await axios.post(`${BACKEND_URL}/users/register`, user);
     } catch (error: any) {
-      toast.error("Error registering user: " + error.message);
+      console.log("Error registering user: " + error.message);
     }
   },
   loginUser: async (user: Object) => {
@@ -61,26 +60,24 @@ export const api = {
       return data;
     } catch (error: any) {
       console.log(error);
-      toast.error("Error logging in user: " + error.message);
+      console.log("Error logging in user: " + error.message);
     }
   },
   addProductToCart: async (product: Product, userId: string | undefined) => {
     try {
       return await axios.put(`${BACKEND_URL}/users/${userId}/cart`, product);
     } catch (error: any) {
-      toast.error("Error adding product to cart: " + error.message);
+      console.log("Error adding product to cart: " + error.message);
     }
   },
   deleteProductFromCart: async (
     productId: string,
     userId: string | undefined
-  ) => {
+  ): Promise<void> => {
     try {
-      return await axios.delete(
-        `${BACKEND_URL}/users/${userId}/cart/${productId}`
-      );
+      await axios.delete(`${BACKEND_URL}/users/${userId}/cart/${productId}`);
     } catch (error: any) {
-      toast.error("Error deleting product from cart: " + error.message);
+      console.log("Error deleting product from cart: " + error.message);
     }
   },
   fetchUser: async (): Promise<User | null | undefined> => {
