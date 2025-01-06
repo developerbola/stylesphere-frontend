@@ -11,6 +11,7 @@ import {
   NotFound,
   Dashboard,
   CheckOut,
+  Edit,
 } from "./pages/pages";
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
@@ -35,7 +36,6 @@ const App = () => {
     "/profile",
     "/dashboard",
   ];
-  const footerPath = ["/", "/about", "/products", "/products/:id"];
 
   const doesPathMatch = (path: string, routes: string[]) => {
     return routes.some((route) => {
@@ -72,11 +72,12 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/edit/:id" element={<Edit />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
       <Toaster />
-      {doesPathMatch(path, footerPath) && !cartToggle && <Footer />}
+      {doesPathMatch(path, ["/"]) && !cartToggle && <Footer />}
     </UserProvider>
   );
 };

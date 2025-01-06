@@ -36,7 +36,7 @@ const Products = () => {
             })}
           </ul>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-[80%] min-h-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-full">
           {products?.length > 0 ? (
             (currentCategory !== "All"
               ? products.filter((produc) => produc.category == currentCategory)

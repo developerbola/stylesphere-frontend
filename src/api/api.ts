@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = {
   getProducts: async () => {
@@ -22,9 +22,9 @@ export const api = {
     try {
       return {
         data: [
-          { name: "clothes", image: "/category/clothe.jpg" },
-          { name: "shoes", image: "/category/shoe.jpg" },
-          { name: "watches", image: "/category/watch.jpg" },
+          { name: "Clothes", image: "/category/clothe.jpg" },
+          { name: "Shoes", image: "/category/shoe.jpg" },
+          { name: "Watches", image: "/category/watch.jpg" },
         ],
       };
     } catch (error: any) {
@@ -44,6 +44,9 @@ export const api = {
     } catch (error: any) {
       console.log("Error deleting product: " + error.message);
     }
+  },
+  updateProduct: async (id: string | undefined, prdc: Object) => {
+    await axios.put(`${BACKEND_URL}/products/${id}`, prdc);
   },
   // User ACTIONS
   registerUser: async (user: Object) => {

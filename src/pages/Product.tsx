@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api/api";
 import { Loader } from "../components/components";
 import { useUser } from "../context/UserProvider";
@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product>({
     name: "",
     image: "",
@@ -16,7 +17,7 @@ const Product = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { user, setUser } = useUser();
+  const { user, setUser, isAdmin } = useUser();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -53,6 +54,25 @@ const Product = () => {
   if (error) {
     return <h1>{error}</h1>;
   }
+  async function deleteProduct() {
+    try {
+      await api.deleteProduct(product._id);
+      toast.success("Product deleted!");
+      toast(() => (
+        <span className="flex gap-2 items-center">
+          Go to the Products page
+          <button
+            onClick={() => navigate("/products")}
+            className="p-2 px-3 rounded-md bg-gray-950 text-white"
+          >
+            Go
+          </button>
+        </span>
+      ));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -70,20 +90,34 @@ const Product = () => {
             <h1 className="text-2xl">{product.name}</h1>
             <p className="text-2xl">${product.price}</p>
           </div>
-          <div className="flex gap-5 justify-end">
-            <button
-              className="flex gap-2 items-center transition-opacity bg-[#000] text-white backdrop-blur-md p-3 rounded-xl z-10"
-              onClick={handleAddToCart}
-            >
-              Add to Cart
-              <img
-                src="/cart.svg"
-                alt="cart icon"
-                height={15}
-                width={15}
-                style={{ filter: "invert(1)" }}
-              />
-            </button>
+          <div className="flex gap-2 justify-end">
+            {user ? (
+              isAdmin ? (
+                <>
+                  <button
+                    className="flex gap-2 items-center transition-opacity bg-gray-800 text-white backdrop-blur-md p-2 px-3 rounded-lg z-10"
+                    onClick={() => navigate(`/edit/${product._id}`)}
+                  >
+                    Edit Product
+                  </button>
+                  <button
+                    className="flex gap-2 items-center transition-opacity bg-red-500 text-white backdrop-blur-md p-2 px-3 rounded-lg z-10"
+                    onClick={deleteProduct}
+                  >
+                    Delete Product
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="flex gap-2 items-center transition-opacity bg-[#000] text-white backdrop-blur-md p-2 px-3 rounded-lg z-10"
+                  onClick={handleAddToCart}
+                >
+                  Add to Cart
+                </button>
+              )
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       ) : (

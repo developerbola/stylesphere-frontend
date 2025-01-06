@@ -6,6 +6,7 @@ export { default as CustomerService } from "./CustomerService.tsx";
 export { default as Profile } from "./Profile.tsx";
 export { default as Dashboard } from "./Dashboard.tsx";
 export { default as CheckOut } from "./CheckOut.tsx";
+export { default as Edit } from "./Edit.tsx";
 
 export { default as Login } from "./Login.tsx";
 export { default as SignUp } from "./SignUp.tsx";

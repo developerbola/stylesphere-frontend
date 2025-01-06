@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const adminLinks = [...links, "Dashboard"];
 
   return (
-    <nav className="fixed w-full z-[99999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
+    <nav className="fixed w-full z-[9999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto exs:px-10 vxs:px-2 py-6">
         <Link
           to="/"
