@@ -54,16 +54,9 @@ export const api = {
     }
   },
   loginUser: async (user: Object) => {
-    try {
-      const { data } = await axios.post(`${BACKEND_URL}/users/login`, user);
-      Cookies.set("token", data.token, { expires: 7 });
-      console.log(data);
-
-      return data;
-    } catch (error: any) {
-      console.log(error);
-      console.log("Error logging in user: " + error.message);
-    }
+    const { data } = await axios.post(`${BACKEND_URL}/users/login`, user);
+    Cookies.set("token", data.token, { expires: 7 });
+    return data;
   },
   addProductToCart: async (product: Product, userId: string | undefined) => {
     try {

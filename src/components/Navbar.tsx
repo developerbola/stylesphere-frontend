@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { useUser } from "../context/UserProvider";
+import Loader from "./Loader";
+import { Link } from "react-router-dom";
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
-  const { user } = useUser();
+  const { user, isAdmin } = useUser();
   const token = Cookies.get("token");
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -13,14 +15,21 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const adminLinks = [...links, "Dashboard"];
 
   return (
-    <nav className="fixed w-full z-999 top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-10 py-6">
-        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="/logo.svg" className="h-8 w-8" alt="Flowbite Logo" />
+    <nav className="fixed w-full z-[99999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto exs:px-10 vxs:px-2 py-6">
+        <Link
+          to="/"
+          className="flex items-center space-x-3 rtl:space-x-reverse"
+        >
+          <img
+            src="/logo.svg"
+            className="h-8 w-8 exs:block vxs:hidden"
+            alt="Flowbite Logo"
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
             StyleSphere
           </span>
-        </a>
+        </Link>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className="flex gap-4">
             {(user as User) ? (
@@ -35,27 +44,24 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                       : ""}
                   </button>
                 </a>
-                <button
-                  className="text-black outline-none"
-                  onClick={() => setCartToggle(true)}
-                >
-                  <img
-                    src="/cart.svg"
-                    alt="cart icon"
-                    className="h-[32px] w-[32px]"
-                  />
-                </button>
+                {!isAdmin && (
+                  <button
+                    className="text-black outline-none"
+                    onClick={() => setCartToggle(true)}
+                  >
+                    <img
+                      src="/cart.svg"
+                      alt="cart icon"
+                      className="h-[32px] w-[32px]"
+                    />
+                  </button>
+                )}
               </div>
             ) : token ? (
               <div className="flex gap-3">
-                <a href="/profile">
-                  <button
-                    className="cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center"
-                    onClick={() => setLogout(!logout)}
-                  >
-                    U
-                  </button>
-                </a>
+                <button className="bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center">
+                  <Loader fill="white" className="scale-[40%]" />
+                </button>
                 <button
                   className="text-black outline-none"
                   onClick={() => setCartToggle(true)}
@@ -105,17 +111,14 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
           } w-full md:flex md:w-auto md:order-1`}
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-            {(user?._id == import.meta.env.VITE_ADMIN_ID
-              ? adminLinks
-              : links
-            ).map((link) => (
+            {(isAdmin ? adminLinks : links).map((link) => (
               <li key={link}>
-                <a
-                  href={link.split(" ").join("-").toLowerCase()}
+                <Link
+                  to={link.split(" ").join("-").toLowerCase()}
                   className="block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
                 >
                   {link}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

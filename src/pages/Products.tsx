@@ -23,9 +23,10 @@ const Products = () => {
 
               return (
                 <li
-                  className={`text-lg cursor-pointer font-bold ${
+                  className={`relative text-lg cursor-pointer font-bold ${
                     active ? "opacity-100" : "opacity-25"
                   }`}
+                  id={active ? "activeCategory" : ""}
                   onClick={() => setCurrentCategory(category)}
                   key={category}
                 >

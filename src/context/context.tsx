@@ -3,6 +3,7 @@ import { createContext, Dispatch, SetStateAction } from "react";
 interface UserContextType {
   user: User | null | undefined;
   setUser: Dispatch<SetStateAction<User | null | undefined>>;
+  isAdmin: boolean;
 }
 interface ProductsContextType {
   products: Product[] | null | undefined;
@@ -12,6 +13,7 @@ interface ProductsContextType {
 const initialUserContext: UserContextType = {
   user: null,
   setUser: () => {},
+  isAdmin: false,
 };
 const initialProductsContext: ProductsContextType = {
   products: null,

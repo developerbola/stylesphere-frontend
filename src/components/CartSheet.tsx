@@ -53,7 +53,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
           </p>
         </div>
       ) : (
-        <>
+        <div className="h-screen">
           <div className="flex justify-between items-center">
             <h1 className="flex gap-2 items-center text-[1.5rem] font-[600]">
               My Cart{" "}
@@ -62,7 +62,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
             <h1 className="text-[1.5rem]">${totalPrice}</h1>
           </div>
           <div
-            className="flex flex-col gap-2 mt-5 overflow-y-scroll"
+            className="flex flex-col gap-2 mt-5 h-full overflow-y-scroll"
             style={{ maxHeight: "calc(100vh - 200px)" }}
           >
             {products.length ? (
@@ -100,7 +100,17 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
               <h1>No Product in your cart</h1>
             )}
           </div>
-        </>
+          <div>
+            <button
+              className="w-full h-[50px] bg-gray-900 text-white font-semibold rounded-md mt-5"
+              onClick={() => {
+                window.location.href = "/checkout";
+              }}
+            >
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

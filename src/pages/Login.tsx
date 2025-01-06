@@ -17,7 +17,6 @@ const Login = () => {
       await api.loginUser(user);
       window.location.href = "/";
     } catch (error: any) {
-      console.error("Error during login:", error);
       setError(
         error?.response?.data?.message ?? "An unexpected error occurred"
       );
@@ -91,6 +90,26 @@ const Login = () => {
               </a>
             </p>
           </form>
+        </div>
+        <div className="flex gap-2 justify-center px-4">
+          <button
+            className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md"
+            onClick={() => {
+              setEmail("admin@icloud.com");
+              setPassword("adminpassword");
+            }}
+          >
+            Login as Admin
+          </button>
+          <button
+            className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md"
+            onClick={() => {
+              setEmail("user@icloud.com");
+              setPassword("userpassword");
+            }}
+          >
+            Login as User
+          </button>
         </div>
       </div>
     </div>

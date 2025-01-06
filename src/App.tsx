@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   Home,
   About,
@@ -10,16 +10,22 @@ import {
   Profile,
   NotFound,
   Dashboard,
+  CheckOut,
 } from "./pages/pages";
 import { match } from "path-to-regexp";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
-import { UserProvider, useUser } from "./context/UserProvider";
+import { UserProvider } from "./context/UserProvider";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
-  const path = window.location.pathname;
+  const location = useLocation();
+  const [path, setPath] = useState<string>(location.pathname);
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location]);
+
   const layoutPaths = [
     "/",
     "/about",
@@ -27,7 +33,9 @@ const App = () => {
     "/products/:id",
     "/customer-service",
     "/profile",
+    "/dashboard",
   ];
+  const footerPath = ["/", "/about", "/products", "/products/:id"];
 
   const doesPathMatch = (path: string, routes: string[]) => {
     return routes.some((route) => {
@@ -46,15 +54,11 @@ const App = () => {
 
   return (
     <UserProvider>
-      {doesPathMatch(path, [...layoutPaths, "/dashboard"]) && (
-        <>
-          <Navbar setCartToggle={setCartToggle} />
-        </>
+      {doesPathMatch(path, layoutPaths) && (
+        <Navbar setCartToggle={setCartToggle} />
       )}
       {doesPathMatch(path, layoutPaths) && (
-        <>
-          <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
-        </>
+        <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
       )}
       <main>
         <Routes>
@@ -67,11 +71,12 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/checkout" element={<CheckOut />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
       <Toaster />
-      {doesPathMatch(path, layoutPaths) && !cartToggle && <Footer />}
+      {doesPathMatch(path, footerPath) && !cartToggle && <Footer />}
     </UserProvider>
   );
 };
