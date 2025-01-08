@@ -35,7 +35,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
 
   return (
     <div
-      className={`border-l fixed top-0 min-h-screen md:w-[30%] xs:w-[50%] vxs:w-[80%] p-[30px] z-[999] bg-[#ffffffcc] backdrop-blur-[15px] ${
+      className={`border-l fixed top-0 min-h-screen md:w-[30%] xs:w-[50%] vxs:w-[80%] p-[30px] z-[99999999] bg-[#ffffffcc] backdrop-blur-[15px] ${
         cartToggle ? "right-0" : "-right-[100%]"
       } transition-right duration-500`}
       onMouseOver={() => setCartToggle(true)}

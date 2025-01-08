@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export const api = {
   getProducts: async () => {
@@ -20,15 +20,24 @@ export const api = {
   },
   getCategories: async () => {
     try {
-      return {
-        data: [
-          { name: "Clothes", image: "/category/clothe.jpg" },
-          { name: "Shoes", image: "/category/shoe.jpg" },
-          { name: "Watches", image: "/category/watch.jpg" },
-        ],
-      };
+      const { data } = await axios.get(`${BACKEND_URL}/categories`);
+      return data;
     } catch (error: any) {
       console.log("Error fetching categories: " + error.message);
+    }
+  },
+  addCategory: async (category: object) => {
+    try {
+      await axios.post(`${BACKEND_URL}/categories`, category);
+    } catch (error: any) {
+      console.log("Error adding category: " + error.message);
+    }
+  },
+  deleteCategory: async (id: string) => {
+    try {
+      await axios.delete(`${BACKEND_URL}/categories/${id}`);
+    } catch (error: any) {
+      console.log("Error adding category: " + error.message);
     }
   },
   createProduct: async (prdct: Object) => {

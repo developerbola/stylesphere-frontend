@@ -1,17 +1,247 @@
+import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserProvider";
+import { api } from "../api/api"; // Assuming `api` is your service for API calls
 
 const Dashboard = () => {
   const { user } = useUser();
-  if (user?._id !== import.meta.env.VITE_ADMIN_ID) {
-    toast.error("You are not admin bro");
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1000);
-  }
+  const [categories, setCategories] = useState<
+    { _id: string; name: string; image: string }[]
+  >([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [newCategory, setNewCategory] = useState<string>("");
+  const [newCategoryImage, setNewCategoryImage] = useState<string>("");
+  const [newProduct, setNewProduct] = useState<{
+    name: string | undefined;
+    price: number | undefined;
+    image: string | undefined;
+    category: string | undefined;
+  }>({
+    name: "",
+    price: 0,
+    image: "",
+    category: "",
+  });
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setNewProduct((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Redirect non-admin users
+  useEffect(() => {
+    if (user?._id !== import.meta.env.VITE_ADMIN_ID) {
+      toast.error("You are not admin bro");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+    }
+  }, [user]);
+
+  // Fetch categories and products
+  const fetchProducts = async () => {
+    const productsRes = await api.getProducts();
+    setProducts(productsRes);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesRes = await api.getCategories();
+        setCategories(categoriesRes);
+        fetchProducts();
+      } catch (error) {
+        toast.error("Failed to fetch data");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleAddCategory = async () => {
+    try {
+      await api.addCategory({ name: newCategory, image: newCategoryImage });
+      setCategories([
+        ...categories,
+        { _id: newCategory, name: newCategory, image: newCategoryImage },
+      ]);
+      setNewCategory("");
+      toast.success("Category added successfully");
+    } catch (error) {
+      toast.error("Failed to add category");
+    }
+  };
+
+  const handleDeleteCategory = async (categoryId: string) => {
+    try {
+      await api.deleteCategory(categoryId);
+      setCategories(categories.filter((cat) => cat._id !== categoryId));
+      toast.success("Category deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete category");
+    }
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    try {
+      await api.deleteProduct(productId);
+      setProducts(products.filter((product) => product._id !== productId));
+      toast.success("Product deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete product");
+    }
+  };
+
+  const handleAddProduct = async (newProduct: object) => {
+    try {
+      await api.createProduct(newProduct);
+      fetchProducts();
+      toast.success("Product added successfully");
+    } catch (error) {
+      toast.error("Failed to add product");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      Dashboard
+    <div className="px-4 my-[100px] sm:px-6 lg:px-8">
+      <section className="w-full max-w-4xl mb-8 mx-auto">
+        <h2 className="text-xl font-semibold mb-4">Categories</h2>
+        <div className="mb-4 flex flex-col sm:flex-row gap-2">
+          <input
+            type="text"
+            value={newCategory}
+            onChange={(e) => setNewCategory(e.target.value)}
+            placeholder="New category name"
+            className="border border-gray-300 p-2 rounded-md flex-1"
+          />
+          <input
+            type="text"
+            value={newCategoryImage}
+            onChange={(e) => setNewCategoryImage(e.target.value)}
+            placeholder="New category image"
+            className="border border-gray-300 p-2 rounded-md flex-1"
+          />
+          <button
+            onClick={handleAddCategory}
+            className="p-2 bg-blue-500 text-white rounded-md"
+          >
+            Add Category
+          </button>
+        </div>
+        <ul>
+          {categories?.map((category) => (
+            <li
+              key={category._id}
+              className="flex justify-between items-center w-full sm:w-1/2 lg:w-1/3 my-2"
+            >
+              <img
+                src={category.image}
+                alt={category.name}
+                className="h-[40px] w-[40px] rounded-md"
+              />
+              <p>{category.name}</p>
+              <button
+                onClick={() => handleDeleteCategory(category._id)}
+                className="text-red-500"
+              >
+                Delete
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="w-full max-w-4xl mx-auto">
+        <h2 className="text-xl font-semibold mb-4">Add Product</h2>
+        <div className="mb-4">
+          <input
+            type="text"
+            className="border border-gray-300 p-2 rounded-md w-full mb-2"
+            placeholder="Enter product name"
+            onChange={handleChange}
+            name="name"
+            value={newProduct.name || ""}
+          />
+          <input
+            type="text"
+            className="border border-gray-300 p-2 rounded-md w-full mb-2"
+            placeholder="Enter product image URL"
+            onChange={handleChange}
+            name="image"
+            value={newProduct.image || ""}
+          />
+          <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 mb-2">
+            <span className="text-gray-500">$</span>
+            <input
+              type="number"
+              className="flex-1 ml-2 border-none focus:ring-0 focus:outline-none"
+              placeholder="Enter price"
+              name="price"
+              onChange={handleChange}
+              value={newProduct.price || ""}
+            />
+          </div>
+          <select
+            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 mb-4"
+            value={newProduct.category || ""}
+            onChange={(e) =>
+              setNewProduct((prevData) => ({
+                ...prevData,
+                category: e.target.value,
+              }))
+            }
+          >
+            {categories?.map((cat) => (
+              <option value={cat.name} key={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={() => handleAddProduct(newProduct)}
+            className="p-2 bg-blue-500 text-white rounded-md w-full"
+          >
+            Add Product
+          </button>
+        </div>
+        <h2 className="text-xl font-semibold mb-4">Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {products?.map((product) => (
+            <div key={product._id}>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="h-[200px] w-full object-cover rounded-md mb-2"
+              />
+              <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+              <div className="flex justify-between items-center h-[30px]">
+                <h3 className="text-lg font-semibold">${product.price}</h3>
+                <div>
+                  <button
+                    onClick={() =>
+                      (window.location.href = `/edit/${product._id}`)
+                    }
+                    className="mr-2 text-blue-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProduct(product._id)}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

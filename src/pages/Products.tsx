@@ -1,25 +1,35 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/api";
 import { Loader } from "../components/components";
+import { useLocation } from "react-router-dom";
 
 const Products = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const category = queryParams.get("category");
   const [products, setProducts] = useState<Product[]>([]);
-  const [currentCategory, setCurrentCategory] = useState<string>("All");
-  const categories = ["All", "Shoes", "Clothes", "Watches"];
+  const [currentCategory, setCurrentCategory] = useState<string>(
+    category ? category : "All"
+  );
+  const [categories, setCategories] = useState<{ name: string }[]>([]);
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await api.getProducts();
-      setProducts(res);
+    const fetch = async () => {
+      const product = await api.getProducts();
+      setProducts(product);
+      const categories = await api.getCategories();
+      setCategories([{ name: "All" }, ...categories]);
     };
-    fetchProducts();
+    fetch();
   }, []);
+
   return (
     <div className="min-h-[calc(100vh-85px)] w-full px-10 flex flex-col gap-4 mt-[85px]">
       <div className="flex w-full">
         <div className="w-[15%] pl-4 pt-4">
           <ul>
-            {categories.map((category) => {
-              const active = currentCategory == category;
+            {categories?.map((category: { name: string }) => {
+              const active = currentCategory == category.name;
 
               return (
                 <li
@@ -27,10 +37,10 @@ const Products = () => {
                     active ? "opacity-100" : "opacity-25"
                   }`}
                   id={active ? "activeCategory" : ""}
-                  onClick={() => setCurrentCategory(category)}
-                  key={category}
+                  onClick={() => setCurrentCategory(category.name)}
+                  key={category.name}
                 >
-                  {category}
+                  {category.name}
                 </li>
               );
             })}
