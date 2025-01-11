@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useUser } from "../context/UserProvider";
 import Loader from "./Loader";
 import { Link } from "react-router-dom";
+import { doesPathMatch } from "../utils/doesPathMatch";
 const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
@@ -14,6 +15,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   const links = ["About", "Products", "Customer Service"];
   const adminLinks = [...links, "Dashboard"];
 
+  if (!doesPathMatch()) return;
   return (
     <nav className="fixed w-full z-[9999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto exs:px-10 vxs:px-2 py-6">

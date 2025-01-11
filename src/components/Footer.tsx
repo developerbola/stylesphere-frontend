@@ -1,4 +1,7 @@
+import { doesPathMatch } from "../utils/doesPathMatch";
+
 const Footer = () => {
+  if (!doesPathMatch(["/"])) return;
   return (
     <footer>
       <div className="flex flex-col gap-5 mx-auto w-full max-w-screen-xl p-4">

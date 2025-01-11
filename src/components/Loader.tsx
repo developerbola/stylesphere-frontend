@@ -2,13 +2,14 @@ import React from "react";
 interface LoaderProps {
   fill?: string;
   className?: string;
+  size?: number;
 }
-const Loader: React.FC<LoaderProps> = ({ fill, className }) => {
+const Loader: React.FC<LoaderProps> = ({ fill, className, size }) => {
   return (
-    <div className="spin h-[65px] w-[65px]">
+    <div className={`spin h-[${size}px] w-[${size}px]`}>
       <svg
-        width={"65"}
-        height={"65"}
+        width={size ? size : 65}
+        height={size ? size : 65}
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
         fill={fill}

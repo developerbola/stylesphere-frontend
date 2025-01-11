@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api } from "../api/api";
+import Loader from "../components/Loader";
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -71,7 +72,13 @@ const Login = () => {
               />
             </div>
             <button className="w-full bg-gray-900 text-white bg-primary-600 hover:bg-primary-700 active:scale-95 transition-transform font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? (
+                <p className="flex items-center justify-center gap-2 opacity-80">
+                  Signing in <Loader fill="white" size={20} />
+                </p>
+              ) : (
+                "Sign In"
+              )}
             </button>
             <div
               className={`${

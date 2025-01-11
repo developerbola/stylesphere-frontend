@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api/api";
 import { useUser } from "../context/UserProvider";
 import toast from "react-hot-toast";
+import { doesPathMatch } from "../utils/doesPathMatch";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const { user, setUser } = useUser();
@@ -16,23 +17,27 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
     0
   );
   const handleDeleteProduct = async (productId: string) => {
-    try {
-      await api.deleteProductFromCart(productId, (user as User)?._id);
-
-      const refreshedUserData = await api.fetchUser();
-      setUser(refreshedUserData);
-      setProducts((prevProducts) =>
-        prevProducts.filter((product) => product._id !== productId)
-      );
-
-      toast.success(`Product deleted from cart`);
-    } catch (error: any) {
-      console.error(
-        `Error deleting product from cart: ${error.response?.data?.message}`
-      );
-    }
+    toast
+      .promise(api.deleteProductFromCart(productId, (user as User)?._id), {
+        loading: "Deleting product...",
+        success: "Product deleted from cart",
+        error: (err) => `Error: ${err.response?.data?.message}`,
+      })
+      .then(async () => {
+        const refreshedUserData = await api.fetchUser();
+        setUser(refreshedUserData);
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product._id !== productId)
+        );
+      })
+      .catch((error) => {
+        console.error(
+          `Error deleting product from cart: ${error.response?.data?.message}`
+        );
+      });
   };
 
+  if (!doesPathMatch()) return;
   return (
     <div
       className={`border-l fixed top-0 min-h-screen md:w-[30%] xs:w-[50%] vxs:w-[80%] p-[30px] z-[99999999] bg-[#ffffffcc] backdrop-blur-[15px] ${

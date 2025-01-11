@@ -15,17 +15,22 @@ export const UserProvider = ({ children }: { children: any }) => {
     }
     return null;
   });
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await api.fetchUser();
-      if (userData?._id == import.meta.env.VITE_ADMIN_ID) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
+      try {
+        const userData = await api.fetchUser();
+        if (userData?._id == import.meta.env.VITE_ADMIN_ID) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+        setUser(userData);
+        sessionStorage.setItem("user", JSON.stringify(userData));
+      } catch (error: any) {
+        setError(error.code);
       }
-      setUser(userData);
-      sessionStorage.setItem("user", JSON.stringify(userData));
     };
     fetchUser();
   }, []);
@@ -39,7 +44,7 @@ export const UserProvider = ({ children }: { children: any }) => {
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isAdmin }}>
+    <UserContext.Provider value={{ user, setUser, isAdmin, error }}>
       {children}
     </UserContext.Provider>
   );

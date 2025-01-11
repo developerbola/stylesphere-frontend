@@ -1,24 +1,12 @@
-import { useEffect, useState } from "react";
-import { api } from "../../api/api";
 import { Loader } from "../../components/components";
+import { useProducts } from "../../context/ProductsProvider";
 
 const Hero = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    const getAllProducts = async () => {
-      try {
-        const data = await api.getProducts();
-        setProducts(data.slice(0, 2));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAllProducts();
-  }, []);
+  const { products, isLoading } = useProducts();
   return (
-    <div className="h-screen flex items-center px-16">
-      <div className="h-full w-[50%] flex flex-col gap-3 justify-center">
-        <h1 className="text-[4rem] font-extrabold w-[90%]">
+    <div className="h-screen flex items-center lg:px-16 vxs:px-2">
+      <div className="h-full lg:w-[50%] vxs:w-full flex flex-col gap-3 justify-center">
+        <h1 className="lg:text-[4rem] sm:text-[3.6rem] vxs:text-[1rem] font-extrabold lg:w-[90%] vxs:w-full">
           Choose{" "}
           <span className="bg-black text-white px-3 rounded-2xl">Your</span>{" "}
           Trendy Collection
@@ -41,13 +29,13 @@ const Hero = () => {
         </div>
       </div>
       <div
-        className="h-full w-1/2 flex items-center justify-around"
+        className="h-full w-1/2 lg:flex vxs:hidden items-center justify-around"
         id="image_container"
       >
-        {products.length === 0 ? (
+        {isLoading ? (
           <Loader />
         ) : (
-          products.map((product: Product, index: number) => {
+          products?.slice(0, 2).map((product: Product, index: number) => {
             return (
               <div
                 className={`w-[280px] h-[400px] rounded-3xl group flex items-end gap-2 justify-center overflow-hidden ${

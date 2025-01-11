@@ -2,13 +2,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserProvider";
 import { api } from "../api/api"; // Assuming `api` is your service for API calls
+import { useProducts } from "../context/ProductsProvider";
 
 const Dashboard = () => {
   const { user } = useUser();
   const [categories, setCategories] = useState<
     { _id: string; name: string; image: string }[]
   >([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [newCategory, setNewCategory] = useState<string>("");
   const [newCategoryImage, setNewCategoryImage] = useState<string>("");
   const [newProduct, setNewProduct] = useState<{
@@ -22,6 +22,7 @@ const Dashboard = () => {
     image: "",
     category: "",
   });
+  const { products, fetchProducts } = useProducts();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,18 +44,11 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  // Fetch categories and products
-  const fetchProducts = async () => {
-    const productsRes = await api.getProducts();
-    setProducts(productsRes);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const categoriesRes = await api.getCategories();
         setCategories(categoriesRes);
-        fetchProducts();
       } catch (error) {
         toast.error("Failed to fetch data");
       }
@@ -89,9 +83,12 @@ const Dashboard = () => {
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-      await api.deleteProduct(productId);
-      setProducts(products.filter((product) => product._id !== productId));
-      toast.success("Product deleted successfully");
+      toast.promise(api.deleteProduct(productId), {
+        loading: "Deleting product...",
+        success: "Product deleted successfully",
+        error: "Failed to delete product",
+      });
+      fetchProducts();
     } catch (error) {
       toast.error("Failed to delete product");
     }
@@ -99,9 +96,12 @@ const Dashboard = () => {
 
   const handleAddProduct = async (newProduct: object) => {
     try {
-      await api.createProduct(newProduct);
+      toast.promise(api.createProduct(newProduct), {
+        loading: "Adding product...",
+        success: "Product added successfully",
+        error: "Failed to add product",
+      });
       fetchProducts();
-      toast.success("Product added successfully");
     } catch (error) {
       toast.error("Failed to add product");
     }

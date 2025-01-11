@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { api } from "../api/api";
 import { Loader } from "../components/components";
 import { useLocation } from "react-router-dom";
+import { useProducts } from "../context/ProductsProvider";
 
 const Products = () => {
+  const { products = [] } = useProducts();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
-  const [products, setProducts] = useState<Product[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>(
     category ? category : "All"
   );
@@ -15,8 +16,6 @@ const Products = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const product = await api.getProducts();
-      setProducts(product);
       const categories = await api.getCategories();
       setCategories([{ name: "All" }, ...categories]);
     };
@@ -47,9 +46,9 @@ const Products = () => {
           </ul>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-full">
-          {products?.length > 0 ? (
+          {products && products.length > 0 ? (
             (currentCategory !== "All"
-              ? products.filter((produc) => produc.category == currentCategory)
+              ? products?.filter((produc) => produc.category == currentCategory)
               : products
             ).map((product: Product) => (
               <a

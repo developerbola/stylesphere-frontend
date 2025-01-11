@@ -2,17 +2,35 @@ import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "./context";
 import { api } from "../api/api";
 
-export const UserProvider = ({ children }: { children: any }) => {
-  const [products, setProducts] = useState<Product[] | null | undefined>(null);
+let cachedProducts: Product[] | null = null;
+
+export const ProductsProvider = ({ children }: { children: any }) => {
+  const [products, setProducts] = useState<Product[] | null | undefined>(
+    cachedProducts
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<string>("");
+  const fetchProducts = async () => {
+    try {
+      setIsLoading(true);
+      const productData = await api.getProducts();
+      cachedProducts = productData;
+      setProducts(productData);
+      setIsLoading(false);
+    } catch (error: any) {
+      setIsError(error?.message || error?.response?.message);
+    }
+  };
   useEffect(() => {
-    const fetchProducts = async () => {
-      const userData = await api.getProducts();
-      setProducts(userData);
-    };
-    fetchProducts();
+    if (!cachedProducts) {
+      fetchProducts();
+    }
   }, []);
+
   return (
-    <ProductsContext.Provider value={{ products, setProducts }}>
+    <ProductsContext.Provider
+      value={{ products, fetchProducts, isLoading, isError }}
+    >
       {children}
     </ProductsContext.Provider>
   );
