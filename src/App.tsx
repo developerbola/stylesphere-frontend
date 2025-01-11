@@ -19,6 +19,7 @@ import { UserProvider } from "./context/UserProvider";
 import { Toaster } from "react-hot-toast";
 import { isServerRunning } from "./api/api";
 import { ProductsProvider } from "./context/ProductsProvider";
+import { CategoriesProvider } from "./context/CategoriesProvider";
 
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
@@ -53,26 +54,28 @@ const App = () => {
   return (
     <UserProvider>
       <ProductsProvider>
-        <Navbar setCartToggle={setCartToggle} />
-        <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<Product />} />
-            <Route path="/customer-service" element={<CustomerService />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/edit/:id" element={<Edit />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Toaster />
-        <Footer />
+        <CategoriesProvider>
+          <Navbar setCartToggle={setCartToggle} />
+          <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/products/:id" element={<Product />} />
+              <Route path="/customer-service" element={<CustomerService />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/checkout" element={<CheckOut />} />
+              <Route path="/edit/:id" element={<Edit />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Toaster />
+          <Footer />
+        </CategoriesProvider>
       </ProductsProvider>
     </UserProvider>
   );

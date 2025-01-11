@@ -21,6 +21,25 @@ export const ProductsProvider = ({ children }: { children: any }) => {
       setIsError(error?.message || error?.response?.message);
     }
   };
+  const deleteProduct = async (id: string) => {
+    try {
+      const data = await api.deleteProduct(id);
+      fetchProducts();
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+  const addProduct = async (newProduct: Object) => {
+    try {
+      const data = await api.createProduct(newProduct);
+      fetchProducts();
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
+
   useEffect(() => {
     if (!cachedProducts) {
       fetchProducts();
@@ -29,7 +48,14 @@ export const ProductsProvider = ({ children }: { children: any }) => {
 
   return (
     <ProductsContext.Provider
-      value={{ products, fetchProducts, isLoading, isError }}
+      value={{
+        products,
+        fetchProducts,
+        isLoading,
+        isError,
+        addProduct,
+        deleteProduct,
+      }}
     >
       {children}
     </ProductsContext.Provider>

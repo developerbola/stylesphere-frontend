@@ -1,16 +1,30 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserProvider";
-import { api } from "../api/api"; // Assuming `api` is your service for API calls
 import { useProducts } from "../context/ProductsProvider";
+import { useCategories } from "../context/CategoriesProvider";
+import {
+  handleAddCategory,
+  handleDeleteCategory,
+  handleAddProduct,
+  handleDeleteProduct,
+} from "../handlers/handlers";
 
 const Dashboard = () => {
+  // Importing stuff from context
   const { user } = useUser();
-  const [categories, setCategories] = useState<
-    { _id: string; name: string; image: string }[]
-  >([]);
-  const [newCategory, setNewCategory] = useState<string>("");
-  const [newCategoryImage, setNewCategoryImage] = useState<string>("");
+  const { products } = useProducts();
+  const { categories } = useCategories();
+
+  // States
+  const [newCategory, setNewCategory] = useState<{
+    name: string;
+    image: string;
+  }>({
+    name: "",
+    image: "",
+  });
+
   const [newProduct, setNewProduct] = useState<{
     name: string | undefined;
     price: number | undefined;
@@ -22,13 +36,22 @@ const Dashboard = () => {
     image: "",
     category: "",
   });
-  const { products, fetchProducts } = useProducts();
 
-  const handleChange = (
+  const handleProductChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setNewProduct((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleCategoryChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setNewCategory((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -44,69 +67,6 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const categoriesRes = await api.getCategories();
-        setCategories(categoriesRes);
-      } catch (error) {
-        toast.error("Failed to fetch data");
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleAddCategory = async () => {
-    try {
-      await api.addCategory({ name: newCategory, image: newCategoryImage });
-      setCategories([
-        ...categories,
-        { _id: newCategory, name: newCategory, image: newCategoryImage },
-      ]);
-      setNewCategory("");
-      toast.success("Category added successfully");
-    } catch (error) {
-      toast.error("Failed to add category");
-    }
-  };
-
-  const handleDeleteCategory = async (categoryId: string) => {
-    try {
-      await api.deleteCategory(categoryId);
-      setCategories(categories.filter((cat) => cat._id !== categoryId));
-      toast.success("Category deleted successfully");
-    } catch (error) {
-      toast.error("Failed to delete category");
-    }
-  };
-
-  const handleDeleteProduct = async (productId: string) => {
-    try {
-      toast.promise(api.deleteProduct(productId), {
-        loading: "Deleting product...",
-        success: "Product deleted successfully",
-        error: "Failed to delete product",
-      });
-      fetchProducts();
-    } catch (error) {
-      toast.error("Failed to delete product");
-    }
-  };
-
-  const handleAddProduct = async (newProduct: object) => {
-    try {
-      toast.promise(api.createProduct(newProduct), {
-        loading: "Adding product...",
-        success: "Product added successfully",
-        error: "Failed to add product",
-      });
-      fetchProducts();
-    } catch (error) {
-      toast.error("Failed to add product");
-    }
-  };
-
   return (
     <div className="px-4 my-[100px] sm:px-6 lg:px-8">
       <section className="w-full max-w-4xl mb-8 mx-auto">
@@ -114,20 +74,22 @@ const Dashboard = () => {
         <div className="mb-4 flex flex-col sm:flex-row gap-2">
           <input
             type="text"
-            value={newCategory}
-            onChange={(e) => setNewCategory(e.target.value)}
+            value={newCategory.name}
+            onChange={handleCategoryChange}
+            name="name"
             placeholder="New category name"
             className="border border-gray-300 p-2 rounded-md flex-1"
           />
           <input
             type="text"
-            value={newCategoryImage}
-            onChange={(e) => setNewCategoryImage(e.target.value)}
+            value={newCategory.image}
+            onChange={handleCategoryChange}
+            name="image"
             placeholder="New category image"
             className="border border-gray-300 p-2 rounded-md flex-1"
           />
           <button
-            onClick={handleAddCategory}
+            onClick={() => handleAddCategory(newCategory)}
             className="p-2 bg-blue-500 text-white rounded-md"
           >
             Add Category
@@ -163,7 +125,7 @@ const Dashboard = () => {
             type="text"
             className="border border-gray-300 p-2 rounded-md w-full mb-2"
             placeholder="Enter product name"
-            onChange={handleChange}
+            onChange={handleProductChange}
             name="name"
             value={newProduct.name || ""}
           />
@@ -171,7 +133,7 @@ const Dashboard = () => {
             type="text"
             className="border border-gray-300 p-2 rounded-md w-full mb-2"
             placeholder="Enter product image URL"
-            onChange={handleChange}
+            onChange={handleProductChange}
             name="image"
             value={newProduct.image || ""}
           />
@@ -182,7 +144,7 @@ const Dashboard = () => {
               className="flex-1 ml-2 border-none focus:ring-0 focus:outline-none"
               placeholder="Enter price"
               name="price"
-              onChange={handleChange}
+              onChange={handleProductChange}
               value={newProduct.price || ""}
             />
           </div>
