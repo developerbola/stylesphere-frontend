@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
-import { useCategories } from "../context/CategoriesProvider";
 
-export const handleAddCategory = async (newCategory: {
-  name: string;
-  image: string;
-}) => {
-  const { addCategory } = useCategories();
+export const handleAddCategory = async (
+  newCategory: {
+    name: string;
+    image: string;
+  },
+  addCategory: (category: Category) => Promise<any>
+) => {
   toast.promise(
     (async () => {
       addCategory({

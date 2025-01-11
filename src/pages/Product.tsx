@@ -4,9 +4,11 @@ import { api } from "../api/api";
 import { Loader } from "../components/components";
 import { useUser } from "../context/UserProvider";
 import toast from "react-hot-toast";
+import { useProducts } from "../context/ProductsProvider";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
+  const { deleteProduct } = useProducts();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product>({
     name: "",
@@ -54,25 +56,6 @@ const Product = () => {
   if (error) {
     return <h1>{error}</h1>;
   }
-  async function deleteProduct() {
-    try {
-      await api.deleteProduct(product._id);
-      toast.success("Product deleted!");
-      toast(() => (
-        <span className="flex gap-2 items-center">
-          Go to the Products page
-          <button
-            onClick={() => navigate("/products")}
-            className="p-2 px-3 rounded-md bg-gray-950 text-white"
-          >
-            Go
-          </button>
-        </span>
-      ));
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -102,7 +85,20 @@ const Product = () => {
                   </button>
                   <button
                     className="flex gap-2 items-center transition-opacity bg-red-500 text-white backdrop-blur-md p-2 px-3 rounded-lg z-10"
-                    onClick={deleteProduct}
+                    onClick={() => {
+                      deleteProduct(product._id);
+                      toast(() => (
+                        <span className="flex gap-2 items-center">
+                          Go to the Products page
+                          <button
+                            onClick={() => navigate("/products")}
+                            className="p-2 px-3 rounded-md bg-gray-950 text-white"
+                          >
+                            Go
+                          </button>
+                        </span>
+                      ));
+                    }}
                   >
                     Delete Product
                   </button>

@@ -1,11 +1,13 @@
 import toast from "react-hot-toast";
-import { useProducts } from "../context/ProductsProvider";
 
-export const handleAddProduct = async (newProduct: object) => {
-  const { addProduct, fetchProducts } = useProducts();
+export const handleAddProduct = async (
+  newProduct: object,
+  addProduct: (product: object) => Promise<Product | any>,
+  fetchProducts: () => void
+) => {
   toast.promise(
     async () => {
-      addProduct(newProduct);
+      return await addProduct(newProduct);
     },
     {
       loading: "Adding product...",

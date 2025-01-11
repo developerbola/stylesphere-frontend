@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
-import { useCategories } from "../context/CategoriesProvider";
 
-export const handleDeleteCategory = async (categoryId: string) => {
-  const { deleteCategory } = useCategories();
+export const handleDeleteCategory = async (
+  categoryId: string,
+  deleteCategory: (categoryId: string) => Promise<any>
+) => {
   toast.promise(
     async () => {
-      deleteCategory(categoryId);
+      await deleteCategory(categoryId);
     },
     {
       loading: "Deleting category...",

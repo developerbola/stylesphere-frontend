@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import { useProducts } from "../context/ProductsProvider";
 
-export const handleDeleteProduct = async (productId: string) => {
-  const { deleteProduct } = useProducts();
+export const handleDeleteProduct = async (
+  productId: string,
+  deleteProduct: (productId: string) => Promise<any>
+) => {
   toast.promise(
     async () => {
       deleteProduct(productId);

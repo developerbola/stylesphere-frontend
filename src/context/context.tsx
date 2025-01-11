@@ -9,16 +9,16 @@ interface UserContextType {
 interface ProductsContextType {
   products: Product[] | null | undefined;
   fetchProducts: () => void;
-  addProduct: (product: Object) => void;
-  deleteProduct: (id: string) => void;
+  addProduct: (product: Object) => Promise<Product>;
+  deleteProduct: (id: string) => Promise<any>;
   isLoading: boolean;
   isError: any;
 }
 interface CategoriesContextType {
   categories: Product[] | null | undefined;
   fetchCategories: () => void;
-  addCategory: (category: Category) => void;
-  deleteCategory: (id: string) => void;
+  addCategory: (category: Category) => Promise<any>;
+  deleteCategory: (id: string) => Promise<any>;
   isLoading: boolean;
   isError: any;
 }
@@ -32,16 +32,32 @@ const initialUserContext: UserContextType = {
 const initialProductsContext: ProductsContextType = {
   products: null,
   fetchProducts: () => {},
-  addProduct: () => {},
-  deleteProduct: () => {},
+  addProduct: async (product: Object) => {
+    return new Promise<Product>((resolve) => {
+      resolve({} as Product);
+    });
+  },
+  deleteProduct: async (id: string) => {
+    return new Promise<any>((resolve) => {
+      resolve({} as Product);
+    });
+  },
   isLoading: false,
   isError: "",
 };
 const CategoriesContextType: CategoriesContextType = {
   categories: null,
   fetchCategories: () => {},
-  addCategory: () => {},
-  deleteCategory: () => {},
+  addCategory: async (category: Category) => {
+    return new Promise<any>((resolve) => {
+      resolve({});
+    });
+  },
+  deleteCategory: async (id: string) => {
+    return new Promise<any>((resolve) => {
+      resolve({});
+    });
+  },
   isLoading: false,
   isError: "",
 };

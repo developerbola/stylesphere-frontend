@@ -13,8 +13,8 @@ import {
 const Dashboard = () => {
   // Importing stuff from context
   const { user } = useUser();
-  const { products } = useProducts();
-  const { categories } = useCategories();
+  const { products, addProduct, fetchProducts, deleteProduct } = useProducts();
+  const { categories, deleteCategory, addCategory } = useCategories();
 
   // States
   const [newCategory, setNewCategory] = useState<{
@@ -89,7 +89,7 @@ const Dashboard = () => {
             className="border border-gray-300 p-2 rounded-md flex-1"
           />
           <button
-            onClick={() => handleAddCategory(newCategory)}
+            onClick={() => handleAddCategory(newCategory, addCategory)}
             className="p-2 bg-blue-500 text-white rounded-md"
           >
             Add Category
@@ -108,7 +108,9 @@ const Dashboard = () => {
               />
               <p>{category.name}</p>
               <button
-                onClick={() => handleDeleteCategory(category._id)}
+                onClick={() =>
+                  handleDeleteCategory(category._id, deleteCategory)
+                }
                 className="text-red-500"
               >
                 Delete
@@ -165,7 +167,9 @@ const Dashboard = () => {
             ))}
           </select>
           <button
-            onClick={() => handleAddProduct(newProduct)}
+            onClick={() =>
+              handleAddProduct(newProduct, addProduct, fetchProducts)
+            }
             className="p-2 bg-blue-500 text-white rounded-md w-full"
           >
             Add Product
@@ -193,7 +197,9 @@ const Dashboard = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteProduct(product._id)}
+                    onClick={() =>
+                      handleDeleteProduct(product._id, deleteProduct)
+                    }
                     className="text-red-500"
                   >
                     Delete

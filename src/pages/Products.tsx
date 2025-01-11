@@ -15,33 +15,37 @@ const Products = () => {
   const { categories } = useCategories();
 
   return (
-    <div className="min-h-[calc(100vh-85px)] w-full px-10 flex flex-col gap-4 mt-[85px]">
-      <div className="flex w-full">
-        <div className="w-[15%] pl-4 pt-4">
-          <ul>
-            {["All", ...(categories || [])]?.map((category) => {
-              const categoryName =
-                typeof category === "string" ? category : category.name;
-              const active = currentCategory == categoryName;
+    <div className="min-h-[calc(100vh-85px)] w-full px-4 sm:px-6 lg:px-10 flex flex-col gap-4 mt-[85px]">
+      <div className="flex flex-col lg:flex-row w-full">
+        <div className="w-full lg:w-1/5 pl-[1rem] sm:pl-4 pt-4">
+          <ul className="space-y-2">
+            {[{ name: "All", image: "" }, ...(categories || [])]?.map(
+              (category: Category) => {
+                const categoryName = category.name;
 
-              return (
-                <li
-                  className={`relative text-lg cursor-pointer font-bold ${
-                    active ? "opacity-100" : "opacity-25"
-                  }`}
-                  onClick={() => setCurrentCategory(categoryName)}
-                  key={categoryName}
-                >
-                  {categoryName}
-                </li>
-              );
-            })}
+                const active = currentCategory == categoryName;
+
+                return (
+                  <li
+                    className={`relative text-lg cursor-pointer font-bold ${
+                      active ? "opacity-100" : "opacity-25"
+                    }`}
+                    onClick={() => setCurrentCategory(categoryName)}
+                    key={categoryName}
+                  >
+                    {categoryName}
+                  </li>
+                );
+              }
+            )}
           </ul>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 min-h-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
           {products && products.length > 0 ? (
             (currentCategory !== "All"
-              ? products?.filter((produc) => produc.category == currentCategory)
+              ? products.filter(
+                  (product) => product.category == currentCategory
+                )
               : products
             ).map((product: Product) => (
               <a
@@ -53,17 +57,21 @@ const Products = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="h-[230px] min-w-[250px] max-w-full object-cover"
+                    className="h-[230px] w-full object-cover"
                   />
                   <div className="flex justify-between items-end">
-                    <h2 className="text-2xl font-bold">{product.name}</h2>
-                    <h2 className="text-xl font-medium">${product.price}</h2>
+                    <h2 className="text-lg sm:text-xl font-bold">
+                      {product.name}
+                    </h2>
+                    <h2 className="text-base sm:text-lg font-medium">
+                      ${product.price}
+                    </h2>
                   </div>
                 </div>
               </a>
             ))
           ) : (
-            <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <Loader />
             </div>
           )}

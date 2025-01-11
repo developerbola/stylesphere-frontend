@@ -21,7 +21,7 @@ export const ProductsProvider = ({ children }: { children: any }) => {
       setIsError(error?.message || error?.response?.message);
     }
   };
-  const deleteProduct = async (id: string) => {
+  const deleteProduct = async (id: string): Promise<any> => {
     try {
       const data = await api.deleteProduct(id);
       fetchProducts();
@@ -30,7 +30,7 @@ export const ProductsProvider = ({ children }: { children: any }) => {
       return error;
     }
   };
-  const addProduct = async (newProduct: Object) => {
+  const addProduct = async (newProduct: Object): Promise<Product | any> => {
     try {
       const data = await api.createProduct(newProduct);
       fetchProducts();
