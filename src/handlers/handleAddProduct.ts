@@ -11,7 +11,7 @@ export const handleAddProduct = async (
     },
     {
       loading: "Adding product...",
-      success: "Product added successfully",
+      success: "Product added",
       error: "Failed to add product",
     }
   );

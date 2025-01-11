@@ -44,12 +44,15 @@ const Product = () => {
 
   const handleAddToCart = async () => {
     try {
-      await api.addProductToCart(product, user?._id);
+      toast.promise(api.addProductToCart(product, user?._id), {
+        loading: "Adding product...",
+        success: "Product added",
+        error: "Error adding product",
+      });
       const refreshedUserData = await api.fetchUser();
       setUser(refreshedUserData);
-      toast.success("Product added to cart");
     } catch (error: any) {
-      console.error("Error adding product to cart:", error);
+      console.error("Error adding product:", error);
     }
   };
 

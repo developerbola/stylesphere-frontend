@@ -16,7 +16,7 @@ export const handleAddCategory = async (
     })(),
     {
       loading: "Adding category...",
-      success: "Category added successfully",
+      success: "Category added",
       error: "Failed to add category",
     }
   );

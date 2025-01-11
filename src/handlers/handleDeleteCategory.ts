@@ -10,7 +10,7 @@ export const handleDeleteCategory = async (
     },
     {
       loading: "Deleting category...",
-      success: "Category deleted successfully",
+      success: "Category deleted",
       error: "Failed to delete category",
     }
   );

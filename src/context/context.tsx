@@ -32,12 +32,12 @@ const initialUserContext: UserContextType = {
 const initialProductsContext: ProductsContextType = {
   products: null,
   fetchProducts: () => {},
-  addProduct: async (product: Object) => {
+  addProduct: async () => {
     return new Promise<Product>((resolve) => {
       resolve({} as Product);
     });
   },
-  deleteProduct: async (id: string) => {
+  deleteProduct: async () => {
     return new Promise<any>((resolve) => {
       resolve({} as Product);
     });
@@ -48,12 +48,12 @@ const initialProductsContext: ProductsContextType = {
 const CategoriesContextType: CategoriesContextType = {
   categories: null,
   fetchCategories: () => {},
-  addCategory: async (category: Category) => {
+  addCategory: async () => {
     return new Promise<any>((resolve) => {
       resolve({});
     });
   },
-  deleteCategory: async (id: string) => {
+  deleteCategory: async () => {
     return new Promise<any>((resolve) => {
       resolve({});
     });

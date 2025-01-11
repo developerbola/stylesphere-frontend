@@ -10,7 +10,7 @@ export const handleDeleteProduct = async (
     },
     {
       loading: "Deleting product...",
-      success: "Product deleted successfully",
+      success: "Product deleted",
       error: "Failed to delete product",
     }
   );

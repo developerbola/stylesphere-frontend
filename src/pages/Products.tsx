@@ -18,18 +18,17 @@ const Products = () => {
     <div className="min-h-[calc(100vh-85px)] w-full px-4 sm:px-6 lg:px-10 flex flex-col gap-4 mt-[85px]">
       <div className="flex flex-col lg:flex-row w-full">
         <div className="w-full lg:w-1/5 pl-[1rem] sm:pl-4 pt-4">
-          <ul className="space-y-2">
+          <ul className="space-y-2 flex lg:flex-col flex-row lg:gap-0 gap-3">
             {[{ name: "All", image: "" }, ...(categories || [])]?.map(
-              (category: Category) => {
+              (category: Category, index: number) => {
                 const categoryName = category.name;
-
                 const active = currentCategory == categoryName;
 
                 return (
                   <li
                     className={`relative text-lg cursor-pointer font-bold ${
                       active ? "opacity-100" : "opacity-25"
-                    }`}
+                    } ${index === 0 ? "mt-2" : ""}`}
                     onClick={() => setCurrentCategory(categoryName)}
                     key={categoryName}
                   >
