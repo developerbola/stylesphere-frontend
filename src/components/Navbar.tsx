@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
         >
           <img
             src="/logo.svg"
-            className="h-8 w-8 exs:block vxs:hidden"
+            className="h-8 w-8 sm:flex vxs:hidden"
             alt="Flowbite Logo"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
@@ -76,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                 </button>
               </div>
             ) : (
-              <a href="/login" className="sm:flex vxs:hidden">
+              <a href="/login">
                 <button
                   type="button"
                   className="text-gray-900 bg-transparent hover:bg-gray-900 hover:text-white hover:outline-none outline font-medium rounded-lg text-sm px-6 py-2 text-center"
@@ -89,7 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
           <button
             onClick={handleToggle}
             type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-none"
           >
             <svg
               className="w-5 h-5"

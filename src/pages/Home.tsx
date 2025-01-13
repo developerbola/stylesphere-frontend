@@ -1,7 +1,7 @@
 import { Filter, Hero } from "../sections/sections";
 const Home = () => {
   return (
-    <div className="px-10">
+    <div className="sm:px-10 vxs:px-3">
       <Hero />
       <Filter />
     </div>

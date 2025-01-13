@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <div className="h-screen flex items-center sm:px-16 vxs:px-0">
       <div className="h-full lg:w-1/2 vxs:w-full flex flex-col gap-3 justify-center">
-        <h1 className="font-extrabold w-full text-[2.5rem] xs:text-[2.8rem] sm:text-[3.6rem] lg:text-[4rem]">
+        <h1 className="font-extrabold w-full text-[2.2rem] xs:text-[2.8rem] sm:text-[3.6rem] lg:text-[4rem]">
           Choose{" "}
           <span className="bg-black text-white px-3 rounded-2xl">Your</span>{" "}
           Trendy Collection
