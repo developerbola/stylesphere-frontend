@@ -5,7 +5,6 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const isServerRunning = async () => {
   try {
-    // It's better to use a lightweight health check endpoint if available
     const response = await axios.get(`${BACKEND_URL}/products`);
     return response.status === 200;
   } catch (error: any) {
@@ -18,7 +17,13 @@ export const api = {
   getProducts: async () => {
     if (!(await isServerRunning())) return;
     try {
-      const { data } = await axios.get(`${BACKEND_URL}/products`);
+      const response = await fetch(`${BACKEND_URL}/products`, {
+        cache: "force-cache",
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
       return data;
     } catch (error: any) {
       console.log("Error fetching products: " + error.message);
@@ -31,6 +36,15 @@ export const api = {
       return res;
     } catch (error: any) {
       console.log("Error fetching product: " + error.message);
+    }
+  },
+  getHeroProducts: async () => {
+    if (!(await isServerRunning())) return;
+    try {
+      const { data } = await axios.get(`${BACKEND_URL}/products/hero`);
+      return data;
+    } catch (error: any) {
+      console.log("Error fetching hero products: " + error.message);
     }
   },
   createProduct: async (prdct: Object) => {

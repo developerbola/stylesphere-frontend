@@ -1,8 +1,32 @@
+import { useEffect, useState } from "react";
 import { Loader } from "../../components/components";
-import { useProducts } from "../../context/ProductsProvider";
 
 const Hero = () => {
-  const { products, isLoading } = useProducts();
+  const [products, setProducts] = useState<Product[] | null | undefined>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  useEffect(() => {
+    const fetchdata = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/products`,
+          {
+            cache: "force-cache",
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProducts(data);
+        setIsLoading(false);
+      } catch (error: any) {
+        console.log("Error fetching products: " + error.message);
+      }
+    };
+    fetchdata();
+  }, []);
+
   return (
     <div className="h-screen flex items-center sm:px-16 vxs:px-0">
       <div className="h-full lg:w-1/2 vxs:w-full flex flex-col gap-3 justify-center">

@@ -1,20 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { ProductsContext } from "./context";
 import { api } from "../api/api";
 
-let cachedProducts: Product[] | null = null;
-
 export const ProductsProvider = ({ children }: { children: any }) => {
-  const [products, setProducts] = useState<Product[] | null | undefined>(
-    cachedProducts
-  );
+  const [products, setProducts] = useState<Product[] | null | undefined>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string>("");
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
       const productData = await api.getProducts();
-      cachedProducts = productData;
       setProducts(productData);
       setIsLoading(false);
     } catch (error: any) {
@@ -39,12 +34,6 @@ export const ProductsProvider = ({ children }: { children: any }) => {
       return error;
     }
   };
-
-  useEffect(() => {
-    if (!cachedProducts) {
-      fetchProducts();
-    }
-  }, []);
 
   return (
     <ProductsContext.Provider
