@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "./context";
 import { api } from "../api/api";
 
@@ -16,6 +16,9 @@ export const ProductsProvider = ({ children }: { children: any }) => {
       setIsError(error?.message || error?.response?.message);
     }
   };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   const deleteProduct = async (id: string): Promise<any> => {
     try {
       const data = await api.deleteProduct(id);
