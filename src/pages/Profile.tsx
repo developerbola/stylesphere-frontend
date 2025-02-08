@@ -29,6 +29,13 @@ const Profile = () => {
   }, []);
 
   const handleChange = (e: any) => {
+    if (
+      formData.email === "admin@icloud.com" ||
+      formData.email === "user@icloud.com"
+    ) {
+      toast.error("Sorry you can't edit example user!");
+      return;
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -47,9 +54,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen pt-[100px] px-16">
-      <h1 className="text-3xl font-semibold">Profile</h1>
-      <div className="my-5 w-full max-w-md">
+    <div className="flex flex-col min-h-screen pt-[100px] px-16">
+      <h1 className="text-3xl font-semibold">Profile Information</h1>
+      <div className="my-5 w-full max-w-md flex flex-col flex-grow">
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
           <input
@@ -59,10 +66,6 @@ const Profile = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
             placeholder="Enter your name"
-            readOnly={
-              formData.email === "admin@icloud.com" ||
-              formData.email === "user@icloud.com"
-            }
           />
         </div>
         <div className="mb-4">
@@ -74,10 +77,6 @@ const Profile = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
             placeholder="Enter your email"
-            readOnly={
-              formData.email === "admin@icloud.com" ||
-              formData.email === "user@icloud.com"
-            }
           />
         </div>
         <div className="mb-4 relative">
@@ -89,10 +88,6 @@ const Profile = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
             placeholder="Enter your password"
-            readOnly={
-              formData.email === "admin@icloud.com" ||
-              formData.email === "user@icloud.com"
-            }
           />
           <button
             type="button"
@@ -109,6 +104,8 @@ const Profile = () => {
           >
             Save Changes
           </button>
+        </div>
+        <div className="flex-grow flex items-end gap-2">
           <LogOutButton />
           <DeleteAccountButton />
         </div>
