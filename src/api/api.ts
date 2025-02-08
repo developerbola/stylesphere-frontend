@@ -13,7 +13,7 @@ export const isServerRunning = async () => {
 };
 
 export const api = {
-  // PRODUCTS ACTIONS
+  // ====== PRODUCTS ACTIONS ======
   getProducts: async () => {
     if (!(await isServerRunning())) return;
     try {
@@ -41,8 +41,8 @@ export const api = {
   getHeroProducts: async () => {
     if (!(await isServerRunning())) return;
     try {
-      const { data } = await axios.get(`${BACKEND_URL}/products/hero`);
-      return data;
+      const data = await fetch(`${BACKEND_URL}/products/hero`);
+      return data.json();
     } catch (error: any) {
       console.log("Error fetching hero products: " + error.message);
     }
@@ -71,7 +71,7 @@ export const api = {
       console.log("Error updating product: " + error.message);
     }
   },
-  // CATEGORIES ACTIONS
+  // ====== CATEGORIES ACTIONS ======
   getCategories: async () => {
     if (!(await isServerRunning())) return;
     try {
@@ -97,7 +97,7 @@ export const api = {
       console.log("Error deleting category: " + error.message);
     }
   },
-  // USERS ACTIONS
+  // ====== USERS ACTIONS ======
   registerUser: async (user: Object) => {
     if (!(await isServerRunning())) return;
     try {
@@ -108,13 +108,9 @@ export const api = {
   },
   loginUser: async (user: Object) => {
     if (!(await isServerRunning())) return;
-    try {
-      const { data } = await axios.post(`${BACKEND_URL}/users/login`, user);
-      Cookies.set("token", data.token, { expires: 7 });
-      return data;
-    } catch (error: any) {
-      console.log("Error logging in user: " + error.message);
-    }
+    const { data } = await axios.post(`${BACKEND_URL}/users/login`, user);
+    Cookies.set("token", data.token, { expires: 7 });
+    return data;
   },
   fetchUser: async (): Promise<User | null | undefined> => {
     if (!(await isServerRunning())) return null;
@@ -130,7 +126,15 @@ export const api = {
       return null;
     }
   },
-  // CART ACTIONS
+  updateUser: async (id: string, body: object): Promise<void> => {
+    if (!(await isServerRunning())) return;
+    await axios.put(`${BACKEND_URL}/users/${id}`, body);
+  },
+  deleteUser: async (id: string): Promise<void> => {
+    if (!(await isServerRunning())) return;
+    await axios.delete(`${BACKEND_URL}/users/${id}`);
+  },
+  // ====== CART ACTIONS ======
   addProductToCart: async (product: Product, userId: string | undefined) => {
     if (!(await isServerRunning())) return;
     try {

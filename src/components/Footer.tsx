@@ -7,8 +7,15 @@ const Footer = () => {
       <div className="flex flex-col gap-5 mx-auto w-full max-w-screen-xl p-4">
         <div className="md:flex md:justify-between">
           <div className="flex flex-col gap-5 mb-6 md:mb-0 lg:max-w-[30%] sm:max-w-[50%] vxs:max-w-full">
-            <a href="https://flowbite.com/" className="flex items-center">
-              <img src="/logo.svg" className="h-8 me-3" alt="FlowBite Logo" />
+            <a
+              href="https://stylespheree.vercel.app/"
+              className="flex items-center"
+            >
+              <img
+                src="/logo.svg"
+                className="h-8 me-3"
+                alt="StyleSpheree Logo"
+              />
               <span className="self-center text-2xl font-semibold whitespace-nowrap">
                 StyleSphere
               </span>
@@ -43,6 +50,11 @@ const Footer = () => {
                     NodeJS
                   </a>
                 </li>
+                <li>
+                  <a href="http://mongodb.com/" className="hover:underline">
+                    MongoDB
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
@@ -59,10 +71,7 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://t.me/developersStory"
-                    className="hover:underline"
-                  >
+                  <a href="https://t.me/mutawirr" className="hover:underline">
                     Telegram
                   </a>
                 </li>

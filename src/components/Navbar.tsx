@@ -18,7 +18,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   if (!doesPathMatch()) return;
   return (
     <nav className="fixed w-full z-[9999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto exs:px-10 vxs:px-1 py-6">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto xs:px-10 vxs:px-1 py-6">
         <Link
           to="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
