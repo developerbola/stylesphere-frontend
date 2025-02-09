@@ -11,6 +11,7 @@ const DeleteAccountButton = () => {
       parsedUser.email === "user@icloud.com"
     ) {
       toast.error("Sorry you can't delete example user!");
+      return;
     }
     await api.deleteUser(parsedUser._id);
     handleLogOut();

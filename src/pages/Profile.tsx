@@ -53,6 +53,11 @@ const Profile = () => {
     );
   };
 
+  const isSubmitDisable =
+    parsedUser.email === formData.email &&
+    parsedUser.name === formData.name &&
+    parsedUser.password === formData.password;
+
   return (
     <div className="flex flex-col min-h-screen pt-[100px] px-16">
       <h1 className="text-3xl font-semibold">Profile Information</h1>
@@ -100,7 +105,8 @@ const Profile = () => {
         <div className="flex gap-2">
           <button
             onClick={handleSubmit}
-            className="px-4 bg-gray-950 text-white p-2 rounded-lg"
+            className="px-4 bg-gray-950 text-white p-2 rounded-lg disabled:opacity-50 cursor-not-allowed"
+            disabled={isSubmitDisable}
           >
             Save Changes
           </button>

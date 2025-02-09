@@ -11,3 +11,7 @@ export { default as Edit } from "./Edit.tsx";
 export { default as Login } from "./Login.tsx";
 export { default as SignUp } from "./SignUp.tsx";
 export { default as NotFound } from "./NotFound.tsx";
+
+// Dashboard
+export { default as DashboardUsers } from "./Dashboard/DashboardUsers.tsx";
+export { default as DashboardProducts } from "./Dashboard/DashboardProducts.tsx";

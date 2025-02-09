@@ -12,6 +12,8 @@ import {
   Dashboard,
   CheckOut,
   Edit,
+  DashboardUsers,
+  DashboardProducts,
 } from "./pages/pages";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
@@ -64,7 +66,13 @@ const App = () => {
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<Product />} />
               <Route path="/customer-service" element={<CustomerService />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route index element={<DashboardUsers />} />
+                <Route
+                  path="/dashboard/products"
+                  element={<DashboardProducts />}
+                />
+              </Route>
               <Route path="/profile" element={<Profile />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
