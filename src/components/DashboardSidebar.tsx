@@ -9,7 +9,7 @@ const DashboardSidebar = () => {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-50 block lg:hidden p-2 rounded-md bg-white"
+        className="fixed top-4 right-4 z-50 block lg:hidden p-2 rounded-md bg-white"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -17,7 +17,7 @@ const DashboardSidebar = () => {
       <div
         className={`fixed lg:static top-0 left-0 h-screen w-56 p-5 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 transition-transform duration-300 ease-in-out`}
+        } lg:translate-x-0 transition-transform duration-300 ease-in-out bg-white z-[99]`}
       >
         <div className="mb-6">
           <Link to={"/"}>
