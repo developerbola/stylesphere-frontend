@@ -42,7 +42,7 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen">
       <DashboardSidebar />
-      <div className="p-6 mt-6 lg:w-[calc(100dvw - 224px)] vxs:w-full">
+      <div className="pt-6 flex justify-center w-full">
         <Outlet />
       </div>
       {/* <section className="w-full max-w-4xl mb-8 mx-auto">

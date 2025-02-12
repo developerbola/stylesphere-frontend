@@ -9,7 +9,7 @@ const DashboardSidebar = () => {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 right-4 z-50 block lg:hidden p-2 rounded-md bg-white"
+        className="fixed top-4 right-4 block lg:hidden p-2 rounded-md bg-white"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>

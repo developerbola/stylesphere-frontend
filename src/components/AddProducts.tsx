@@ -31,7 +31,7 @@ const AddProducts: React.FC<{
   };
   return (
     <div
-      className={`absolute top-0 left-0 h-dvh w-dvw bg-white grid place-items-center transition-opacity ${
+      className={`absolute z-20 top-0 left-0 h-dvh px-5 w-dvw bg-white grid place-items-center transition-opacity ${
         toggle ? "" : "opacity-0 invisible"
       }`}
     >
@@ -88,9 +88,10 @@ const AddProducts: React.FC<{
             ))}
           </select>
           <button
-            onClick={() =>
-              handleAddProduct(newProduct, addProduct, fetchProducts)
-            }
+            onClick={() => {
+              handleAddProduct(newProduct, addProduct, fetchProducts);
+              setToggle(false);
+            }}
             className="p-2 bg-gray-950 text-white rounded-md w-full"
           >
             Add Product
