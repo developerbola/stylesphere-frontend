@@ -9,6 +9,7 @@ const layoutPaths = [
   "/products/:id",
   "/customer-service",
   "/profile",
+  "/make-style",
 ];
 
 export const doesPathMatch = (routes?: string[]): boolean => {

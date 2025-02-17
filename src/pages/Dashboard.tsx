@@ -42,7 +42,12 @@ const Dashboard = () => {
   return (
     <div className="flex h-screen">
       <DashboardSidebar />
-      <div className="pt-6 flex justify-center w-full">
+      <div
+        className="pt-6 flex justify-center w-full"
+        style={{
+          minWidth: "calc(100dvw - 224px)",
+        }}
+      >
         <Outlet />
       </div>
       {/* <section className="w-full max-w-4xl mb-8 mx-auto">

@@ -47,9 +47,11 @@ const Hero = () => {
               Shop Now
             </button>
           </a>
-          <button className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap">
-            Make Style
-          </button>
+          <a href="/make-style">
+            <button className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap">
+              Make Style with AI
+            </button>
+          </a>
         </div>
       </div>
       <div

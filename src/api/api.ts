@@ -134,6 +134,21 @@ export const api = {
     if (!(await isServerRunning())) return;
     await axios.delete(`${BACKEND_URL}/users/${id}`);
   },
+  usersCount: async (): Promise<number | null> => {
+    if (!(await isServerRunning())) return null;
+    try {
+      const response = await fetch(`${BACKEND_URL}/users`, {
+        cache: "force-cache",
+      });
+      if (!response.ok) throw new Error(`Error: ${response.status}`);
+      const data = await response.json();
+      return Array.isArray(data) ? data.length : 0;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      return 0;
+    }
+  },
+
   // ====== CART ACTIONS ======
   addProductToCart: async (product: Product, userId: string | undefined) => {
     if (!(await isServerRunning())) return;

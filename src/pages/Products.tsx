@@ -39,7 +39,7 @@ const Products = () => {
             )}
           </ul>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full">
           {products && products.length > 0 ? (
             (currentCategory !== "All"
               ? products.filter(
@@ -56,7 +56,7 @@ const Products = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="h-[230px] w-full object-cover"
+                    className="h-[230px] w-full object-cover rounded-md"
                   />
                   <div className="flex justify-between items-end">
                     <h2 className="text-lg sm:text-xl font-bold">

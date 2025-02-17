@@ -14,6 +14,7 @@ import {
   Edit,
   DashboardUsers,
   DashboardProducts,
+  MakeStyle,
 } from "./pages/pages";
 import { Navbar, CartSheet, Footer } from "./components/components";
 import { useEffect, useState } from "react";
@@ -65,6 +66,7 @@ const App = () => {
               <Route path="/about" element={<About />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<Product />} />
+              <Route path="/make-style" element={<MakeStyle />} />
               <Route path="/customer-service" element={<CustomerService />} />
               <Route path="/dashboard" element={<Dashboard />}>
                 <Route index element={<DashboardUsers />} />
