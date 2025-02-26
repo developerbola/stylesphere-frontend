@@ -1,8 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserProvider";
-import { useCategories } from "../context/CategoriesProvider";
-import { handleAddCategory, handleDeleteCategory } from "../handlers/handlers";
+// import { useCategories } from "../context/CategoriesProvider";
+// import { handleAddCategory, handleDeleteCategory } from "../handlers/handlers";
 import { DashboardSidebar } from "../components/components";
 import { Outlet } from "react-router-dom";
 
@@ -11,23 +11,23 @@ const Dashboard = () => {
   // const { categories, deleteCategory, addCategory } = useCategories();
 
   // States
-  const [newCategory, setNewCategory] = useState<{
-    name: string;
-    image: string;
-  }>({
-    name: "",
-    image: "",
-  });
+  // const [newCategory, setNewCategory] = useState<{
+  //   name: string;
+  //   image: string;
+  // }>({
+  //   name: "",
+  //   image: "",
+  // });
 
-  const handleCategoryChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setNewCategory((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleCategoryChange = (
+  //   e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setNewCategory((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
   // Redirect non-admin users
   useEffect(() => {
