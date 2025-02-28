@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import { useUsers } from "../../context/UsersProvider";
 import Counts from "./Counts";
 
@@ -10,7 +11,9 @@ const DashboardUsers = () => {
 
       {/* Loading State */}
       {isLoading && (
-        <p className="text-center text-blue-500">Loading users...</p>
+        <div className="h-full w-full grid place-items-center">
+          <Loader2 className="spin" />
+        </div>
       )}
 
       {/* Error State */}
@@ -39,11 +42,9 @@ const DashboardUsers = () => {
                   <td className="px-4 py-2">{user.name}</td>
                   <td className="px-4 py-2">{user.email}</td>
                   <td className="px-4 py-2 text-gray-500">
-                    <td className="px-4 py-2 text-gray-500">
-                      {new Date(user.createdAt)
-                        .toLocaleDateString()
-                        .replace(/\//g, ".")}
-                    </td>
+                    {new Date(user.createdAt)
+                      .toLocaleDateString()
+                      .replace(/\//g, ".")}
                   </td>
                 </tr>
               ))}
