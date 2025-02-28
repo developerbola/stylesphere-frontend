@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import axios from "axios";
+import axios, { AxiosPromise, AxiosResponse } from "axios";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -134,18 +134,23 @@ export const api = {
     if (!(await isServerRunning())) return;
     await axios.delete(`${BACKEND_URL}/users/${id}`);
   },
-  usersCount: async (): Promise<number | null> => {
+  getUsers: async (): Promise<null | User[]> => {
     if (!(await isServerRunning())) return null;
+
     try {
       const response = await fetch(`${BACKEND_URL}/users`, {
         cache: "force-cache",
       });
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-      const data = await response.json();
-      return Array.isArray(data) ? data.length : 0;
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data: User[] = await response.json();
+      return data;
     } catch (error) {
       console.error("Error fetching users:", error);
-      return 0;
+      return null;
     }
   },
 

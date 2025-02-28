@@ -22,6 +22,11 @@ interface CategoriesContextType {
   isLoading: boolean;
   isError: any;
 }
+interface UsersContextType {
+  users: User[] | null | undefined;
+  isLoading: boolean;
+  isError: string | null;
+}
 
 const initialUserContext: UserContextType = {
   user: null,
@@ -45,7 +50,14 @@ const initialProductsContext: ProductsContextType = {
   isLoading: false,
   isError: "",
 };
-const CategoriesContextType: CategoriesContextType = {
+
+const initialUsersContext: UsersContextType = {
+  users: [],
+  isError: "",
+  isLoading: false,
+};
+
+const initialCategoriesContextType: CategoriesContextType = {
   categories: null,
   fetchCategories: () => {},
   addCategory: async () => {
@@ -64,4 +76,5 @@ const CategoriesContextType: CategoriesContextType = {
 
 export const UserContext = createContext(initialUserContext);
 export const ProductsContext = createContext(initialProductsContext);
-export const CategoriesContext = createContext(CategoriesContextType);
+export const CategoriesContext = createContext(initialCategoriesContextType);
+export const UsersContext = createContext(initialUsersContext);
