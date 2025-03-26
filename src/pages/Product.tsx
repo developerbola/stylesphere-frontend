@@ -5,6 +5,7 @@ import { Loader } from "../components/components";
 import { useUser } from "../context/UserProvider";
 import toast from "react-hot-toast";
 import { useProducts } from "../context/ProductsProvider";
+import { Loader2 } from "lucide-react";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -63,7 +64,9 @@ const Product = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">
       {isLoading ? (
-        <Loader />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <Loader2 className="animate-spin text-gray-500" size={32} />
+        </div>
       ) : product ? (
         <div className="flex flex-col gap-5">
           <img

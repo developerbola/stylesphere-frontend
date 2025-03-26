@@ -15,7 +15,7 @@ interface ProductsContextType {
   isError: any;
 }
 interface CategoriesContextType {
-  categories: Product[] | null | undefined;
+  categories: Category[] | null | undefined;
   fetchCategories: () => void;
   addCategory: (category: Category) => Promise<any>;
   deleteCategory: (id: string) => Promise<any>;

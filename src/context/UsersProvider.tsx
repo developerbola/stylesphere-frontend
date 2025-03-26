@@ -14,7 +14,6 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
       try {
         const res = await api.getUsers();
-        console.log(res);
 
         if (res) {
           const data = await res;

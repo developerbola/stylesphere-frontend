@@ -9,6 +9,7 @@ declare global {
   interface Category {
     name: string;
     image: string;
+    _id?: string;
   }
   interface CartSheetProps {
     cartToggle: boolean;

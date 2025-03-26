@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Loader } from "../components/components";
 import { useLocation } from "react-router-dom";
 import { useProducts } from "../context/ProductsProvider";
 import { useCategories } from "../context/CategoriesProvider";
+import { Loader2 } from "lucide-react";
+import { BlurImage } from "./Dashboard/DashboardProducts";
+import Categories from "../components/Categories";
 
 const Products = () => {
   const { products = [] } = useProducts();
@@ -17,29 +19,12 @@ const Products = () => {
   return (
     <div className="min-h-[calc(100vh-85px)] w-full px-4 sm:px-6 lg:px-10 flex flex-col gap-4 mt-[85px]">
       <div className="flex flex-col lg:flex-row w-full">
-        <div className="w-full lg:w-1/5 pl-[1rem] sm:pl-4 pt-4">
-          <ul className="space-y-2 flex lg:flex-col flex-row lg:gap-0 gap-3">
-            {[{ name: "All", image: "" }, ...(categories || [])]?.map(
-              (category: Category, index: number) => {
-                const categoryName = category.name;
-                const active = currentCategory == categoryName;
-
-                return (
-                  <li
-                    className={`relative text-lg cursor-pointer font-bold ${
-                      active ? "opacity-100" : "opacity-25"
-                    } ${index === 0 ? "mt-2" : ""}`}
-                    onClick={() => setCurrentCategory(categoryName)}
-                    key={categoryName}
-                  >
-                    {categoryName}
-                  </li>
-                );
-              }
-            )}
-          </ul>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full">
+        <Categories
+          setCurrentCategory={setCurrentCategory}
+          categories={categories}
+          currentCategory={currentCategory}
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full place-items-center">
           {products && products.length > 0 ? (
             (currentCategory !== "All"
               ? products.filter(
@@ -52,26 +37,30 @@ const Products = () => {
                 key={product._id}
                 className="hover:underline"
               >
-                <div className="p-4 flex flex-col gap-2">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-[230px] w-full object-cover rounded-md"
-                  />
-                  <div className="flex justify-between items-end">
-                    <h2 className="text-lg sm:text-xl font-bold">
+                <div
+                  key={product._id}
+                  className="w-[270px] overflow-hidden bg-white p-4"
+                >
+                  {/* Product Image */}
+                  <div className="relative h-[200px] w-full overflow-hidden rounded-md bg-gray-100">
+                    <BlurImage src={product.image} alt={product.name} />
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold mt-2">
                       {product.name}
-                    </h2>
-                    <h2 className="text-base sm:text-lg font-medium">
+                    </h3>
+                    <h3 className="text-lg font-semibold mt-2">
                       ${product.price}
-                    </h2>
+                    </h3>
                   </div>
                 </div>
               </a>
             ))
           ) : (
             <div className="absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <Loader />
+              <Loader2 className="animate-spin text-gray-500" size={32} />
             </div>
           )}
         </div>

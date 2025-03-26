@@ -81,8 +81,8 @@ const AddProducts: React.FC<{
               }))
             }
           >
-            {categories?.map((cat) => (
-              <option value={cat.name} key={cat._id}>
+            {categories?.map((cat, idx) => (
+              <option value={cat.name} key={idx}>
                 {cat.name}
               </option>
             ))}

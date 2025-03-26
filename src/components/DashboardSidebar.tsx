@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, Menu, Package, Users, X } from "lucide-react";
+import { ChevronLeft, ListTree, Menu, Package, Users, X } from "lucide-react";
 
 const DashboardSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,15 +30,22 @@ const DashboardSidebar = () => {
         <nav className="flex flex-col gap-4">
           <Link
             to="/dashboard"
-            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-1"
+            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-[6px]"
           >
             <Users size={20} /> Users
           </Link>
           <Link
             to="/dashboard/products"
-            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-1"
+            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-[6px]"
           >
             <Package size={20} /> Products
+          </Link>
+          <Link
+            to="/dashboard/categories"
+            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-[6px]"
+          >
+            <ListTree size={20} />
+            Categories
           </Link>
         </nav>
       </div>

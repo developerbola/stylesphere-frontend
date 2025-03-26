@@ -24,6 +24,7 @@ import { isServerRunning } from "./api/api";
 import { ProductsProvider } from "./context/ProductsProvider";
 import { CategoriesProvider } from "./context/CategoriesProvider";
 import { UsersProvider } from "./context/UsersProvider";
+import DashboardCategoories from "./pages/Dashboard/DashboardCategoories";
 
 const App = () => {
   const [cartToggle, setCartToggle] = useState<boolean>(false);
@@ -75,6 +76,10 @@ const App = () => {
                   <Route
                     path="/dashboard/products"
                     element={<DashboardProducts />}
+                  />
+                  <Route
+                    path="/dashboard/categories"
+                    element={<DashboardCategoories />}
                   />
                 </Route>
                 <Route path="/profile" element={<Profile />} />

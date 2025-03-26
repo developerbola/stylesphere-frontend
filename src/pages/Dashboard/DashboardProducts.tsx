@@ -36,22 +36,11 @@ const DashboardProducts = () => {
             {products.map((product) => (
               <div
                 key={product._id}
-                className="max-w-[270px] overflow-hidden bg-white p-4"
+                className="w-[270px] overflow-hidden bg-white p-4"
               >
                 {/* Product Image */}
                 <div className="relative h-[200px] w-full overflow-hidden rounded-md bg-gray-100">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-all duration-500 ease-in-out scale-105 blur-sm"
-                    onLoad={(e) => {
-                      const img = e.target as HTMLImageElement;
-                      img.classList.remove("blur-sm");
-                      img.classList.add("scale-100");
-                    }}
-                  />
+                  <BlurImage src={product.image} alt={product.name} />
                 </div>
 
                 {/* Product Info */}
@@ -105,3 +94,43 @@ const DashboardProducts = () => {
 };
 
 export default DashboardProducts;
+
+import { ImgHTMLAttributes } from "react";
+// Define props type that extends native img attributes
+export function BlurImage({
+  src,
+  alt,
+  className,
+  ...props
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+} & ImgHTMLAttributes<HTMLImageElement>) {
+  const [isLoading, setLoading] = useState(true);
+
+  return (
+    <img
+      alt={alt}
+      src={src}
+      loading="lazy"
+      decoding="async"
+      className={`
+        h-full 
+        w-full 
+        object-cover 
+        transition-all 
+        duration-700 
+        ease-in-out 
+        group-hover:opacity-75 
+        ${
+          isLoading
+            ? "scale-110 blur-2xl grayscale"
+            : "scale-100 blur-0 grayscale-0"
+        } 
+        ${className || ""}`}
+      onLoad={() => setLoading(false)}
+      {...props}
+    />
+  );
+}
