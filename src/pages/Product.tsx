@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api/api";
-import { Loader } from "../components/components";
 import { useUser } from "../context/UserProvider";
 import toast from "react-hot-toast";
 import { useProducts } from "../context/ProductsProvider";

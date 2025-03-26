@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import axios, { AxiosPromise, AxiosResponse } from "axios";
+import axios from "axios";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
