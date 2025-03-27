@@ -44,3 +44,19 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.skeleton {
+  background: linear-gradient(90deg, #ffffff07, #e5e7eb, #ffffff07);
+  background-size: 200% 100%;
+  animation: loading 2s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

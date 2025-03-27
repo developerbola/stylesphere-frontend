@@ -60,12 +60,23 @@ const Hero = () => {
         id="image_container"
       >
         {isLoading ? (
-          <Loader />
+          <>
+            <div
+              className={`skeleton w-[280px] h-[400px] rounded-3xl group bg-gray-200 flex items-center justify-center overflow-hidden mt-16`}
+            >
+              <img src="/category_svg/clothe.svg" alt="image of clothe" className="opacity-60" width={200}/>
+            </div>
+            <div
+              className={`skeleton w-[280px] h-[400px] rounded-3xl group bg-gray-200 flex items-center justify-center overflow-hidden -mt-16`}
+            >
+              <img src="/category_svg/watch.svg" alt="image of watch" className="opacity-60" width={200}/>
+            </div>
+          </>
         ) : (
           products?.slice(0, 2).map((product: Product, index: number) => {
             return (
               <div
-                className={`w-[280px] h-[400px] rounded-3xl group flex items-end gap-2 justify-center overflow-hidden ${
+                className={`w-[280px] h-[400px] rounded-3xl group flex items-end justify-center overflow-hidden ${
                   index % 2 ? "-mt-16" : "mt-16"
                 } pb-4`}
                 style={{

@@ -42,44 +42,23 @@ const Categories = ({
           return (
             <li
               key={idx}
-              className={`
-                group 
-                relative 
-                cursor-pointer 
-                py-2 
-                px-3 
-                rounded-md 
-                transition-all 
-                duration-300 
-                ease-in-out
-                ${
-                  active
-                    ? "bg-gray-950 text-white font-medium"
-                    : "hover:bg-gray-100 text-gray-700 hover:text-gray-900"
-                }
-                flex 
-                items-center
-                space-x-2
-                exs:w-[90%] vxs:w-[45px]
-                h-auto
-              `}
+              className={`group relative cursor-pointer py-2 px-3 rounded-md transition-all duration-300 ease-in-out ${
+                active
+                  ? "bg-gray-950 text-white font-medium"
+                  : "hover:bg-gray-100 text-gray-700 hover:text-gray-900"
+              } flex items-center space-x-2 exs:w-[90%] vxs:w-[45px]h-auto`}
               onClick={() => setCurrentCategory(categoryName)}
             >
               {category.image && (
                 <img
                   src={matchIcon(category.name)}
                   alt={categoryName}
-                  className={`
-                    exs:w-6 vxs:w-full 
-                    exs:h-6 vxs:h-full 
-                    transition-opacity 
-                    duration-300
-                    ${
-                      active
-                        ? "opacity-100 invert"
-                        : "opacity-50 group-hover:opacity-75"
-                    }
-                  `}
+                  className={`exs:w-6 vxs:w-full exs:h-6 vxs:h-full transition-all duration-300
+                  ${
+                    active
+                      ? "mix-blend-difference brightness-200 invert"
+                      : "opacity-50 group-hover:opacity-75"
+                  }`}
                 />
               )}
 
