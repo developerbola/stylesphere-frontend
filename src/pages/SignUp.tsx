@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { api } from "../api/api";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -29,11 +30,11 @@ const SignUp = () => {
       setLoading(false);
     }
   };
-
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
       <a
-        href="/"
+        onClick={() => navigate("/")}
         className="flex items-center text-2xl font-semibold text-gray-900"
       >
         <img className="w-8 h-8 mr-2" src="/logo.svg" alt="logo" />
@@ -104,7 +105,7 @@ const SignUp = () => {
             <p className="text-sm font-light text-gray-900">
               Already have an account?{" "}
               <a
-                href="/login"
+                onClick={() => navigate("/login")}
                 className="font-medium text-primary-600 hover:underline"
               >
                 Login

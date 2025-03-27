@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Loader } from "../../components/components";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [products, setProducts] = useState<Product[] | null | undefined>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchdata = async () => {
       setIsLoading(true);
@@ -42,16 +44,15 @@ const Hero = () => {
           </p>
         </div>
         <div className="py-4 flex gap-4">
-          <a href="/products">
-            <button className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap">
-              Shop Now
-            </button>
-          </a>
-          <a href="/make-style">
-            <button className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap">
-              Make Style with AI
-            </button>
-          </a>
+          <button
+            onClick={() => navigate("/products")}
+            className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap"
+          >
+            Shop Now
+          </button>
+          <button className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap">
+            Make Style with AI
+          </button>
         </div>
       </div>
       <div
@@ -74,7 +75,10 @@ const Hero = () => {
                 }}
                 key={index}
               >
-                <a href={`/products/${product._id}`} className="w-2/3">
+                <a
+                  onClick={() => navigate(`/products/${product._id}`)}
+                  className="w-2/3"
+                >
                   <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
                     Discover
                   </button>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useProducts } from "../context/ProductsProvider";
 import { useCategories } from "../context/CategoriesProvider";
 import { Loader2 } from "lucide-react";
@@ -9,6 +9,7 @@ import Categories from "../components/Categories";
 const Products = () => {
   const { products = [] } = useProducts();
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
   const [currentCategory, setCurrentCategory] = useState<string>(
@@ -33,7 +34,7 @@ const Products = () => {
               : products
             ).map((product: Product) => (
               <a
-                href={`/products/${product._id}`}
+                onClick={() => navigate(`/products/${product._id}`)}
                 key={product._id}
                 className="hover:underline xs:w-auto vxs:w-full"
               >

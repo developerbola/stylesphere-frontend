@@ -3,10 +3,12 @@ import { api } from "../api/api";
 import { useUser } from "../context/UserProvider";
 import toast from "react-hot-toast";
 import { doesPathMatch } from "../utils/doesPathMatch";
+import { useNavigate } from "react-router-dom";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const { user, setUserData } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
   useEffect(() => {
     if (user && "cart" in user && user.cart.length) {
       setProducts(user.cart);
@@ -49,7 +51,10 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
           <h1 className="text-center font-bold text-lg">Unautharized</h1>
           <p className="text-center text-sm">
             Please{" "}
-            <a href="/login" className="text-primary-600 underline">
+            <a
+              onClick={() => navigate("/login")}
+              className="text-primary-600 underline"
+            >
               login
             </a>{" "}
             to see your cart.
@@ -119,7 +124,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
             <button
               className="w-full h-[50px] bg-gray-900 text-white font-semibold rounded-md mt-5"
               onClick={() => {
-                window.location.href = "/checkout";
+                navigate("/checkout");
               }}
             >
               Checkout for ${totalPrice}
