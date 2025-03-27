@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Loader } from "../../components/components";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
