@@ -1,19 +1,19 @@
 import toast from "react-hot-toast";
 import { api } from "../api/api";
 import { handleLogOut } from "./LogOutButton";
+import { useUser } from "../context/UserProvider";
 
 const DeleteAccountButton = () => {
+  const { user } = useUser();
   const handleDeleteAcc = async () => {
-    const user = sessionStorage.getItem("user");
-    const parsedUser = user ? JSON.parse(user) : null;
     if (
-      parsedUser.email === "admin@icloud.com" ||
-      parsedUser.email === "user@icloud.com"
+      user?.email === "admin@icloud.com" ||
+      user?.email === "user@icloud.com"
     ) {
       toast.error("Sorry you can't delete example user!");
       return;
     }
-    await api.deleteUser(parsedUser._id);
+    await api.deleteUser(user?._id || "");
     handleLogOut();
   };
   return (

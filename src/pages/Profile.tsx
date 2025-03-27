@@ -3,6 +3,7 @@ import { LogOutButton } from "../components/components";
 import DeleteAccountButton from "../components/DeleteAccountButton";
 import { api } from "../api/api";
 import toast from "react-hot-toast";
+import { useUser } from "../context/UserProvider";
 interface FormUser {
   name: string;
   email: string;
@@ -15,15 +16,14 @@ const Profile = () => {
     password: "",
   });
   const [showPass, setShowPass] = useState<boolean>(false);
-  const user = sessionStorage.getItem("user");
-  const parsedUser = user ? JSON.parse(user) : null;
+  const { user } = useUser();
 
   useEffect(() => {
-    if (parsedUser) {
+    if (user) {
       setFormData({
-        name: parsedUser?.name,
-        email: parsedUser?.email,
-        password: parsedUser?.password,
+        name: user?.name,
+        email: user?.email,
+        password: user?.password,
       });
     }
   }, []);
@@ -43,7 +43,7 @@ const Profile = () => {
     e.preventDefault();
     toast.promise(
       async () => {
-        await api.updateUser(parsedUser._id, formData);
+        await api.updateUser(user?._id || "", formData);
       },
       {
         loading: "Infos saving...",
@@ -54,9 +54,9 @@ const Profile = () => {
   };
 
   const isSubmitDisable =
-    parsedUser.email === formData.email &&
-    parsedUser.name === formData.name &&
-    parsedUser.password === formData.password;
+    user?.email === formData.email &&
+    user?.name === formData.name &&
+    user?.password === formData.password;
 
   return (
     <div className="flex flex-col min-h-screen pt-[100px] px-16">

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { doesPathMatch } from "../utils/doesPathMatch";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
-  const { user, setUser } = useUser();
+  const { user, setUserData } = useUser();
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
     if (user && "cart" in user && user.cart.length) {
@@ -25,7 +25,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
       })
       .then(async () => {
         const refreshedUserData = await api.fetchUser();
-        setUser(refreshedUserData);
+        setUserData(refreshedUserData);
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product._id !== productId)
         );

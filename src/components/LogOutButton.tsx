@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 
 export const handleLogOut = () => {
   Cookies.remove("token");
-  sessionStorage.removeItem("user");
   window.location.href = "/";
 };
 

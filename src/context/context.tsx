@@ -2,7 +2,7 @@ import { createContext, Dispatch, SetStateAction } from "react";
 
 interface UserContextType {
   user: User | null | undefined;
-  setUser: Dispatch<SetStateAction<User | null | undefined>>;
+  setUserData: Dispatch<SetStateAction<User | null | undefined>>;
   isAdmin: boolean;
   error: string | null;
 }
@@ -30,7 +30,7 @@ interface UsersContextType {
 
 const initialUserContext: UserContextType = {
   user: null,
-  setUser: () => {},
+  setUserData: () => {},
   isAdmin: false,
   error: null,
 };

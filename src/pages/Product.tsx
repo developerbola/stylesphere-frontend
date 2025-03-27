@@ -19,7 +19,7 @@ const Product = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { user, setUser, isAdmin } = useUser();
+  const { user, setUserData, isAdmin } = useUser();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -50,7 +50,7 @@ const Product = () => {
         error: "Error adding product",
       });
       const refreshedUserData = await api.fetchUser();
-      setUser(refreshedUserData);
+      setUserData(refreshedUserData);
     } catch (error: any) {
       console.error("Error adding product:", error);
     }

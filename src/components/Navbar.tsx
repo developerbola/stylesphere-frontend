@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import Cookies from "js-cookie";
 import { useUser } from "../context/UserProvider";
 import Loader from "./Loader";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { doesPathMatch } from "../utils/doesPathMatch";
-const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
+const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
   const { user, isAdmin } = useUser();
+  console.log(user);
+  
   const token = Cookies.get("token");
+  const navigate = useNavigate();
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -19,9 +22,9 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
   return (
     <nav className="fixed w-full z-[9999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto xs:px-10 vxs:px-1 py-6">
-        <Link
-          to="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
+        <a
+          onClick={() => navigate("/")}
+          className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
         >
           <img
             src="/logo.svg"
@@ -31,12 +34,12 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
           <span className="self-center text-2xl font-semibold whitespace-nowrap">
             StyleSphere
           </span>
-        </Link>
+        </a>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className="flex gap-4">
             {(user as User) ? (
               <div className="flex gap-3">
-                <a href="/profile">
+                <a onClick={() => navigate("/profile")}>
                   <button
                     className={`cursor-pointer uppercase font-semibold text-xl text-white bg-gray-950 rounded-full h-[40px] w-[40px] flex items-center justify-center`}
                     onClick={() => setLogout(!logout)}
@@ -76,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
                 </button>
               </div>
             ) : (
-              <a href="/login">
+              <a onClick={() => navigate("/login")}>
                 <button
                   type="button"
                   className="text-gray-900 bg-transparent hover:bg-gray-900 hover:text-white hover:border-none border-black border-[1.5px] font-medium rounded-lg text-sm px-6 py-2 text-center"
@@ -115,12 +118,14 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
             {(isAdmin ? adminLinks : links).map((link) => (
               <li key={link} onClick={handleToggle}>
-                <Link
-                  to={link.split(" ").join("-").toLowerCase()}
-                  className="block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
+                <a
+                  onClick={() =>
+                    navigate(link.split(" ").join("-").toLowerCase())
+                  }
+                  className="cursor-pointer block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
                 >
                   {link}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -128,6 +133,6 @@ const Navbar: React.FC<NavbarProps> = ({ setCartToggle }) => {
       </div>
     </nav>
   );
-};
+});
 
 export default Navbar;
