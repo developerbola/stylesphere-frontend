@@ -19,7 +19,7 @@ const Product = () => {
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { user, setUserData, isAdmin } = useUser();
+  const { user, isAdmin } = useUser();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -49,7 +49,6 @@ const Product = () => {
         success: "Product added",
         error: "Error adding product",
       });
-
     } catch (error: any) {
       console.error("Error adding product:", error);
     }
