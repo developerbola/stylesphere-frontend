@@ -1,25 +1,11 @@
-import { useEffect, useState } from "react";
-import { api } from "../../api/api";
+import { useCategories } from "../../context/CategoriesProvider";
 
 const Filter = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const data = await api.getCategories();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    getCategories();
-  }, []);
+  const { categories } = useCategories();
 
   return (
-    <div className="min-h-[300px] p-4 mb-[100px] md:px-10 flex flex-col gap-4">
-      <h1 className="text-2xl md:text-[3rem] text-start">Product Categories</h1>
+    <div className="min-h-[300px] p-4 mb-[100px] md:px-10 flex flex-col">
+      <h1 className="text-2xl md:text-[3rem] text-start mb-[20px]">Product Categories</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories?.map((category: Category) => (
           <a

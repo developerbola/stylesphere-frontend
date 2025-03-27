@@ -1,30 +1,29 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { CategoriesContext } from "./context";
 import { api } from "../api/api";
 
-let cachedCategories: Product[] | null = null;
-
 export const CategoriesProvider = ({ children }: { children: any }) => {
-  const [categories, setCategories] = useState<Product[] | null | undefined>(
-    cachedCategories
-  );
+  const [categories, setCategories] = useState<Category[] | null | undefined>([
+    { name: "", image: "", _id: "2345" },
+  ]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<string>("");
 
   const fetchCategories = async () => {
     try {
       setIsLoading(true);
-      console.log('categories loading');
       const categoryData = await api.getCategories();
-      console.log('categories loaded');
-      cachedCategories = categoryData;
-      
       setCategories(categoryData);
-      setIsLoading(false);
     } catch (error: any) {
       setIsError(error?.message || error?.response?.message);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const addCategory = async ({
     name,
@@ -52,23 +51,20 @@ export const CategoriesProvider = ({ children }: { children: any }) => {
     }
   };
 
-  useEffect(() => {
-    if (!cachedCategories) {
-      fetchCategories();
-    }
-  }, []);
+  const memoData = useMemo(
+    () => ({
+      categories,
+      fetchCategories,
+      addCategory,
+      deleteCategory,
+      isLoading,
+      isError,
+    }),
+    [categories, isLoading, isError]
+  );
 
   return (
-    <CategoriesContext.Provider
-      value={{
-        categories,
-        fetchCategories,
-        addCategory,
-        deleteCategory,
-        isLoading,
-        isError,
-      }}
-    >
+    <CategoriesContext.Provider value={memoData}>
       {children}
     </CategoriesContext.Provider>
   );

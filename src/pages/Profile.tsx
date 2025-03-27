@@ -59,8 +59,8 @@ const Profile = () => {
     user?.password === formData.password;
 
   return (
-    <div className="flex flex-col min-h-screen pt-[100px] px-16">
-      <h1 className="text-3xl font-semibold">Profile Information</h1>
+    <div className="flex flex-col min-h-screen pt-[100px] xs:px-16 vxs:px-6">
+      <h1 className="xs:text-3xl vxs:text-xl font-semibold">Profile Information</h1>
       <div className="my-5 w-full max-w-md flex flex-col flex-grow">
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
@@ -111,7 +111,7 @@ const Profile = () => {
             Save Changes
           </button>
         </div>
-        <div className="flex-grow flex items-end gap-2">
+        <div className="mt-10 flex exs:flex-row vxs:flex-col gap-2">
           <LogOutButton />
           <DeleteAccountButton />
         </div>

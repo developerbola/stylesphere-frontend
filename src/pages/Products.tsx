@@ -24,7 +24,7 @@ const Products = () => {
           categories={categories}
           currentCategory={currentCategory}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full place-items-center">
+        <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full place-items-center">
           {products && products.length > 0 ? (
             (currentCategory !== "All"
               ? products.filter(
@@ -35,14 +35,14 @@ const Products = () => {
               <a
                 href={`/products/${product._id}`}
                 key={product._id}
-                className="hover:underline"
+                className="hover:underline xs:w-auto vxs:w-full"
               >
                 <div
                   key={product._id}
-                  className="w-[270px] overflow-hidden bg-white p-4"
+                  className="xs:w-[270px] vxs:w-full overflow-hidden bg-white p-4"
                 >
                   {/* Product Image */}
-                  <div className="relative h-[200px] w-full overflow-hidden rounded-md bg-gray-100">
+                  <div className="relative xs:h-[200px] vxs:h-auto w-full overflow-hidden rounded-md bg-gray-100">
                     <BlurImage src={product.image} alt={product.name} />
                   </div>
 

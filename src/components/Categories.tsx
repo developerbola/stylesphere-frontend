@@ -34,7 +34,7 @@ const Categories = ({
       <h3 className="text-xl font-semibold text-gray-800 mb-4 hidden lg:block">
         Categories
       </h3>
-      <ul className="grid grid-cols-3 lg:grid-cols-1 exs:gap-3 vxs:gap-1">
+      <ul className="grid vxs:grid-cols-4 exs:grid-cols-3 lg:grid-cols-1 gap-3 exs:place-items-start vxs:place-items-center">
         {categoriesList.map((category: Category, idx) => {
           const categoryName = category.name;
           const active = currentCategory === categoryName;
@@ -60,7 +60,7 @@ const Categories = ({
                 flex 
                 items-center
                 space-x-2
-                exs:w-auto vxs:w-[45px]
+                exs:w-[90%] vxs:w-[45px]
                 h-auto
               `}
               onClick={() => setCurrentCategory(categoryName)}

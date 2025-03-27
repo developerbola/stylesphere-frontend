@@ -2,13 +2,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../api/api";
 import toast from "react-hot-toast";
+import { useCategories } from "../context/CategoriesProvider";
 
 const Edit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
-  const [categories, setCategories] = useState<string[] | undefined>([]);
-
+  const { categories } = useCategories();
   const [formData, setFormData] = useState<{
     name: string | undefined;
     price: number | undefined;
@@ -51,11 +51,6 @@ const Edit = () => {
         if (res) {
           setProduct(res.data);
         }
-
-        const categoriesRes = await api.getCategories();
-        setCategories(
-          categoriesRes?.map((category: { name: string }) => category.name)
-        );
       } catch (error) {
         toast.error("Failed to fetch product");
       }
@@ -137,8 +132,8 @@ const Edit = () => {
             }
           >
             {categories?.map((cat) => (
-              <option value={cat} key={cat}>
-                {cat}
+              <option value={cat.name} key={cat._id}>
+                {cat.name}
               </option>
             ))}
           </select>
