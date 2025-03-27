@@ -81,7 +81,7 @@ const DashboardCategories = () => {
                   setNewCategory({ name: "", image: "" });
                 }}
                 disabled={!newCategory.name || !newCategory.image}
-                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-2 px-4 bg-gray-950 hover:bg-gray-900 text-white font-medium rounded-md transition duration-200 disabled:cursor-not-allowed"
               >
                 Add Category
               </button>

@@ -8,15 +8,14 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [logout, setLogout] = useState(false);
   const { user, isAdmin } = useUser();
-  console.log(user);
-  
+
   const token = Cookies.get("token");
   const navigate = useNavigate();
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
   const links = ["About", "Products", "Customer Service"];
-  const adminLinks = [...links, "Dashboard"];
+  const adminLinks = [...links.slice(0, 2), "Dashboard"];
 
   if (!doesPathMatch()) return;
   return (

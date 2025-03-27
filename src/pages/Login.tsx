@@ -1,11 +1,13 @@
-import { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 import { api } from "../api/api";
 import Loader from "../components/Loader";
-const Login = () => {
+
+const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = {
@@ -24,6 +26,25 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  // Memoize event handlers to prevent unnecessary re-renders
+  const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
+
+  const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  }, []);
+
+  const handleAdminLogin = useCallback(() => {
+    setEmail("admin@icloud.com");
+    setPassword("adminpassword");
+  }, []);
+
+  const handleUserLogin = useCallback(() => {
+    setEmail("user@icloud.com");
+    setPassword("userpassword");
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
@@ -50,7 +71,7 @@ const Login = () => {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 placeholder="youremail@icloud.com"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 value={email}
                 required
               />
@@ -65,7 +86,7 @@ const Login = () => {
                 id="password"
                 placeholder="••••••••"
                 className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
                 value={password}
                 required
               />
@@ -87,7 +108,7 @@ const Login = () => {
               <p className="text-white">{error}</p>
             </div>
             <p className="text-sm font-light text-gray-900">
-              Don’t have an account yet?{" "}
+              Don't have an account yet?{" "}
               <a
                 href="/signup"
                 className="font-medium text-primary-600 hover:underline"
@@ -100,19 +121,13 @@ const Login = () => {
         <div className="flex gap-2 justify-center px-4">
           <button
             className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md"
-            onClick={() => {
-              setEmail("admin@icloud.com");
-              setPassword("adminpassword");
-            }}
+            onClick={handleAdminLogin}
           >
             Login as Admin
           </button>
           <button
             className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md"
-            onClick={() => {
-              setEmail("user@icloud.com");
-              setPassword("userpassword");
-            }}
+            onClick={handleUserLogin}
           >
             Login as User
           </button>
@@ -122,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

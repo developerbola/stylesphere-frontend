@@ -19,19 +19,14 @@ const Categories = ({
     switch (category_name) {
       case "All":
         return "/category_svg/all.svg";
-        break;
       case "Shoes":
         return "/category_svg/shoe.svg";
-        break;
       case "Clothes":
         return "/category_svg/clothe.svg";
-        break;
       case "Watches":
         return "/category_svg/watch.svg";
-        break;
       default:
         return "";
-        break;
     }
   };
   return (
@@ -39,7 +34,7 @@ const Categories = ({
       <h3 className="text-xl font-semibold text-gray-800 mb-4 hidden lg:block">
         Categories
       </h3>
-      <ul className="grid grid-cols-3 lg:grid-cols-1 gap-3">
+      <ul className="grid grid-cols-3 lg:grid-cols-1 exs:gap-3 vxs:gap-1">
         {categoriesList.map((category: Category, idx) => {
           const categoryName = category.name;
           const active = currentCategory === categoryName;
@@ -59,12 +54,14 @@ const Categories = ({
                 ease-in-out
                 ${
                   active
-                    ? "bg-blue-100 font-bold"
+                    ? "bg-gray-950 text-white font-medium"
                     : "hover:bg-gray-100 text-gray-700 hover:text-gray-900"
                 }
                 flex 
                 items-center
                 space-x-2
+                exs:w-auto vxs:w-[45px]
+                h-auto
               `}
               onClick={() => setCurrentCategory(categoryName)}
             >
@@ -73,13 +70,13 @@ const Categories = ({
                   src={matchIcon(category.name)}
                   alt={categoryName}
                   className={`
-                    w-6 
-                    h-6 
+                    exs:w-6 vxs:w-full 
+                    exs:h-6 vxs:h-full 
                     transition-opacity 
                     duration-300
                     ${
                       active
-                        ? "opacity-100"
+                        ? "opacity-100 invert"
                         : "opacity-50 group-hover:opacity-75"
                     }
                   `}
@@ -87,7 +84,9 @@ const Categories = ({
               )}
 
               {/* Category Name */}
-              <span className="truncate exs:flex vxs:hidden">{categoryName}</span>
+              <span className="truncate exs:flex vxs:hidden">
+                {categoryName}
+              </span>
             </li>
           );
         })}

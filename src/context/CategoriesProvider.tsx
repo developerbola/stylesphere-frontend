@@ -14,8 +14,11 @@ export const CategoriesProvider = ({ children }: { children: any }) => {
   const fetchCategories = async () => {
     try {
       setIsLoading(true);
+      console.log('categories loading');
       const categoryData = await api.getCategories();
+      console.log('categories loaded');
       cachedCategories = categoryData;
+      
       setCategories(categoryData);
       setIsLoading(false);
     } catch (error: any) {

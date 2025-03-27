@@ -49,8 +49,7 @@ const Product = () => {
         success: "Product added",
         error: "Error adding product",
       });
-      const refreshedUserData = await api.fetchUser();
-      setUserData(refreshedUserData);
+
     } catch (error: any) {
       console.error("Error adding product:", error);
     }
