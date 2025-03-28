@@ -1,10 +1,10 @@
 import { Loader2 } from "lucide-react";
 import { useUsers } from "../../context/UsersProvider";
 import Counts from "./Counts";
+import { useEffect } from "react";
 
 const DashboardUsers = () => {
   const { users, isError, isLoading } = useUsers();
-
   return (
     <div className="w-full flex flex-col p-4">
       <Counts />
@@ -22,7 +22,7 @@ const DashboardUsers = () => {
       )}
 
       {/* Users Table */}
-      {!isLoading && users && users.length > 0 && (
+      {!isLoading && (
         <div className="overflow-x-auto mt-4">
           <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
             <thead>
@@ -36,7 +36,7 @@ const DashboardUsers = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {users?.map((user, index) => (
                 <tr key={user._id} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-2">{index + 1}</td>
                   <td className="px-4 py-2">{user.name}</td>

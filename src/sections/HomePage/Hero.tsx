@@ -62,14 +62,10 @@ const Hero = () => {
           <>
             <div
               className={`skeleton w-[280px] h-[400px] rounded-3xl group bg-gray-200 flex items-center justify-center overflow-hidden mt-16`}
-            >
-              <img src="/category_svg/clothe.svg" alt="image of clothe" className="opacity-60" width={200}/>
-            </div>
+            />
             <div
               className={`skeleton w-[280px] h-[400px] rounded-3xl group bg-gray-200 flex items-center justify-center overflow-hidden -mt-16`}
-            >
-              <img src="/category_svg/watch.svg" alt="image of watch" className="opacity-60" width={200}/>
-            </div>
+            />
           </>
         ) : (
           products?.slice(0, 2).map((product: Product, index: number) => {

@@ -138,9 +138,7 @@ export const api = {
     if (!(await isServerRunning())) return null;
 
     try {
-      const response = await fetch(`${BACKEND_URL}/users`, {
-        cache: "force-cache",
-      });
+      const response = await fetch(`${BACKEND_URL}/users`);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
