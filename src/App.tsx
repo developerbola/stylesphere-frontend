@@ -63,6 +63,12 @@ const App = () => {
           <UsersProvider>
             <Navbar setCartToggle={setCartToggle} />
             <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
+            <div
+              className={`absolute h-screen w-screen backdrop-blur-sm ${
+                cartToggle ? "z-[6]" : "-z-10 opacity-0"
+              } transition-all `}
+              onClick={() => setCartToggle(false)}
+            />
             <main>
               <Routes>
                 <Route path="/" element={<Home />} />

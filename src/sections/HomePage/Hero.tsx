@@ -45,12 +45,10 @@ const Hero = () => {
         <div className="py-4 flex gap-4">
           <button
             onClick={() => navigate("/products")}
-            className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap"
+            className="cursor-pointer active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap"
           >
-            Shop Now
-          </button>
-          <button className="active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap">
-            Make Style with AI
+            Shop Now 
+            <img src="/cart.svg" className="invert" height={15} width={15} />
           </button>
         </div>
       </div>

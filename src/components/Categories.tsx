@@ -53,7 +53,7 @@ const Categories = ({
                 <img
                   src={matchIcon(category.name)}
                   alt={categoryName}
-                  className={`exs:w-6 vxs:w-full exs:h-6 vxs:h-full transition-all duration-300
+                  className={`w-6 h-6 transition-all duration-300
                   ${
                     active
                       ? "mix-blend-difference brightness-200 invert"

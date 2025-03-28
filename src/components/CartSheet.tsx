@@ -4,6 +4,7 @@ import { useUser } from "../context/UserProvider";
 import toast from "react-hot-toast";
 import { doesPathMatch } from "../utils/doesPathMatch";
 import { useNavigate } from "react-router-dom";
+import { CartItem } from "./CartItem";
 
 const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   const { user, setUserData } = useUser();
@@ -42,7 +43,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   if (!doesPathMatch()) return;
   return (
     <div
-      className={`border-l fixed top-0 min-h-screen md:w-[30%] xs:w-[50%] vxs:w-[80%] p-[30px] pt-[20px] z-[99999999] bg-[#ffffffcc] backdrop-blur-[15px] ${
+      className={`border-l fixed top-0 min-h-screen lg:w-[30%] md:w-[50%] sm:w-[50%] xs:w-[80%] vxs:w-[95%] p-[20px]  z-[10] bg-[#ffffffcc] backdrop-blur-[15px] ${
         cartToggle ? "right-0" : "-right-[100%]"
       } transition-right duration-500`}
     >
@@ -61,75 +62,50 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
           </p>
         </div>
       ) : (
-        <div className="h-screen">
-          <div className="flex justify-between items-center">
-            <h1 className="flex gap-2 items-center text-[1.5rem] font-[600]">
-              My Cart{" "}
-              <img src="/cart.svg" alt="cart icon" height={20} width={20} />
-            </h1>
-            <div
-              className="h-[28px] w-[28px] cursor-pointer"
-              onClick={() => setCartToggle(false)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-                height={28}
-                width={28}
+        <div className="h-screen flex flex-col justify-between pb-10">
+          <div>
+            <div className="flex justify-between items-center">
+              <h1 className="flex gap-2 items-center text-[1.5rem] font-[600]">
+                My Cart{" "}
+                <img src="/cart.svg" alt="cart icon" height={20} width={20} />
+              </h1>
+              <div
+                className="h-[28px] w-[28px] cursor-pointer"
+                onClick={() => setCartToggle(false)}
               >
-                <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  height={28}
+                  width={28}
+                >
+                  <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="flex flex-col gap-3 mt-5 h-full overflow-y-scroll"
+              style={{ maxHeight: "calc(100vh - 200px)" }}
+            >
+              {products.length ? (
+                products.map((item: Product, index: number) => {
+                  return <CartItem item={item} handleDeleteProduct={handleDeleteProduct} key={index} />;
+                })
+              ) : (
+                <h1>No Product in your cart</h1>
+              )}
             </div>
           </div>
-          <div
-            className="flex flex-col gap-2 mt-5 h-full overflow-y-scroll"
-            style={{ maxHeight: "calc(100vh - 200px)" }}
+          <button
+            className={`w-full h-[50px] bg-gray-900 text-white font-semibold rounded-md mt-5 ${
+              totalPrice ? "" : "cursor-not-allowed"
+            }`}
+            onClick={() => {
+              totalPrice ? navigate("/checkout") : "";
+            }}
           >
-            {products.length ? (
-              products.map((item: Product, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-[40px] h-[40px] object-cover rounded-md"
-                      />
-                      <h1 className="text-[1.3rem]">{item.name}</h1>
-                    </div>
-                    <div className="flex gap-5">
-                      <h1 className="text-[1.3rem]">${item.price}</h1>
-                      <button
-                        className="h-[30px] w-[30px] bg-red-600 rounded-md flex items-center justify-center"
-                        onClick={() => handleDeleteProduct(item._id)}
-                      >
-                        <img
-                          src="/trash.svg"
-                          alt="trash icon"
-                          className="h-[16px] w-[16px]"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <h1>No Product in your cart</h1>
-            )}
-          </div>
-          <div>
-            <button
-              className="w-full h-[50px] bg-gray-900 text-white font-semibold rounded-md mt-5"
-              onClick={() => {
-                navigate("/checkout");
-              }}
-            >
-              Checkout for ${totalPrice}
-            </button>
-          </div>
+            Checkout
+          </button>
         </div>
       )}
     </div>

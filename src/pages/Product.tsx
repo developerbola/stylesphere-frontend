@@ -70,7 +70,7 @@ const Product = () => {
             key={product._id}
             src={product.image}
             alt={`Image of ${product.name}`}
-            className="max-w-[375px] max-h-[375px] object-cover"
+            className="max-w-[375px] max-h-[375px] object-cover rounded-md"
           />
           <div className="flex justify-between">
             <h1 className="text-2xl">{product.name}</h1>
@@ -108,8 +108,9 @@ const Product = () => {
                 </>
               ) : (
                 <button
-                  className="flex gap-2 items-center transition-opacity bg-[#000] text-white backdrop-blur-md p-2 px-3 rounded-lg z-10"
+                  className="flex gap-2 items-center transition-opacity bg-[#000] text-white backdrop-blur-md p-2 px-3 rounded-lg"
                   onClick={handleAddToCart}
+                  style={{ zIndex: "1 !important" }}
                 >
                   Add to Cart
                 </button>

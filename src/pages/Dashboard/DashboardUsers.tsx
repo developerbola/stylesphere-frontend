@@ -1,7 +1,6 @@
 import { Loader2 } from "lucide-react";
 import { useUsers } from "../../context/UsersProvider";
 import Counts from "./Counts";
-import { useEffect } from "react";
 
 const DashboardUsers = () => {
   const { users, isError, isLoading } = useUsers();

@@ -19,18 +19,18 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
 
   if (!doesPathMatch()) return;
   return (
-    <nav className="fixed w-full z-[9999] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
+    <nav className="fixed w-full z-[5] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto xs:px-10 vxs:px-1 py-6">
         <a
           onClick={() => navigate("/")}
-          className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer"
+          className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer xs:w-auto vxs:w-1/3 justify-center"
         >
           <img
             src="/logo.svg"
-            className="h-8 w-8 sm:flex vxs:hidden"
+            className="xs:h-8 vxs:h-10 xs:w-8 vxs:w-10 sm:flex xs:hidden vxs:flex"
             alt="Flowbite Logo"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
+          <span className="self-center text-2xl font-semibold whitespace-nowrap xs:flex vxs:hidden">
             StyleSphere
           </span>
         </a>
