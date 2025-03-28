@@ -16,7 +16,6 @@ const Products = () => {
     category ? category : "All"
   );
   const { categories } = useCategories();
-
   return (
     <div className="min-h-[calc(100vh-85px)] w-full px-4 sm:px-6 lg:px-10 flex flex-col gap-4 mt-[85px]">
       <div className="flex flex-col lg:flex-row w-full">
@@ -36,7 +35,7 @@ const Products = () => {
               <a
                 onClick={() => navigate(`/products/${product._id}`)}
                 key={product._id}
-                className="hover:underline xs:w-auto vxs:w-full"
+                className="hover:underline xs:w-auto vxs:w-full cursor-pointer"
               >
                 <div
                   key={product._id}

@@ -22,13 +22,13 @@ export const CartItem: React.FC<{
           alt={item.name}
           className="mr-4 w-[70px] h-[70px] object-cover rounded-lg"
         />
-        <div>
-          <h3 className="text-lg capitalize">{item.name}</h3>
-          <h4 className="font-medium">{item.category}</h4>
+        <div className="flex flex-col">
+          <h2 className="text-xl capitalize">{item.name}</h2>
+          <span>{item.category}</span>
         </div>
       </div>
-      <div className="flex flex-col items-end">
-        <span className="font-bold">${item.price}</span>
+      <div className="flex flex-col items-end justify-between  h-full">
+        <span className="text-xl">${item.price}</span>
         <div className="flex gap-2">
           <div className="flex items-center">
             <button
