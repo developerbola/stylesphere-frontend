@@ -47,7 +47,7 @@ const Hero = () => {
             onClick={() => navigate("/products")}
             className="cursor-pointer active:scale-95 transition-all flex gap-2 text-white bg-black font-medium rounded-lg text-md px-6 py-2 text-center whitespace-nowrap"
           >
-            Shop Now 
+            Shop Now
             <img src="/cart.svg" className="invert" height={15} width={15} />
           </button>
         </div>
@@ -56,41 +56,31 @@ const Hero = () => {
         className="h-full w-1/2 lg:flex vxs:hidden items-center justify-around"
         id="image_container"
       >
-        {isLoading ? (
-          <>
-            <div
-              className={`skeleton w-[280px] h-[400px] rounded-3xl group bg-gray-200 flex items-center justify-center overflow-hidden mt-16`}
-            />
-            <div
-              className={`skeleton w-[280px] h-[400px] rounded-3xl group bg-gray-200 flex items-center justify-center overflow-hidden -mt-16`}
-            />
-          </>
-        ) : (
-          products?.slice(0, 2).map((product: Product, index: number) => {
-            return (
-              <div
-                className={`w-[280px] h-[400px] rounded-3xl group flex items-end justify-center overflow-hidden ${
-                  index % 2 ? "-mt-16" : "mt-16"
-                } pb-4`}
-                style={{
-                  background: `url(${product.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                key={index}
-              >
-                <a
-                  onClick={() => navigate(`/products/${product._id}`)}
-                  className="w-2/3"
-                >
-                  <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
-                    Discover
-                  </button>
-                </a>
-              </div>
-            );
-          })
-        )}
+        {products?.slice(0, 2).map((product: Product, index: number) => (
+          <div
+            className={`w-[280px] h-[400px] rounded-3xl group flex items-end justify-center ${
+              index % 2 ? "-mt-16" : "mt-16"
+            } pb-4 transition-all duration-500`}
+            style={{
+              backgroundColor: isLoading ? "#e5e7eb" : undefined, // bg-gray-200 color during loading
+              backgroundImage: isLoading ? "none" : `url(${product.image})`, // No image while loading
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              transition:
+                "background-color 0.5s ease, background-image 0.5s ease",
+            }}
+            key={index}
+          >
+            <a
+              onClick={() => navigate(`/products/${product._id}`)}
+              className="w-2/3"
+            >
+              <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
+                Discover
+              </button>
+            </a>
+          </div>
+        ))}
       </div>
     </div>
   );
