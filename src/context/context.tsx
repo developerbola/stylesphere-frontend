@@ -34,6 +34,7 @@ const initialUserContext: UserContextType = {
   isAdmin: false,
   error: null,
 };
+
 const initialProductsContext: ProductsContextType = {
   products: null,
   fetchProducts: () => {},

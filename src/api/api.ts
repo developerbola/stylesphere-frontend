@@ -136,14 +136,13 @@ export const api = {
   },
   getUsers: async (): Promise<null | User[]> => {
     if (!(await isServerRunning())) return null;
-
     try {
-      const response = await fetch(`${BACKEND_URL}/users`);
-
+      const response = await fetch(`${BACKEND_URL}/users`, {
+        cache: "force-cache",
+      });
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-
       const data: User[] = await response.json();
       return data;
     } catch (error) {

@@ -11,9 +11,12 @@ const Filter = () => {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading
-          ? [0, 1, 2].map(() => {
+          ? [0, 1, 2].map((_) => {
               return (
-                <div className="flex flex-col gap-2 w-full h-full rounded-lg">
+                <div
+                  className="flex flex-col gap-2 w-full h-full rounded-lg"
+                  key={_}
+                >
                   <div className="h-[200px] md:h-[350px] w-full skeleton" />
                   <span className="h-[50px] w-full skeleton" />
                 </div>
