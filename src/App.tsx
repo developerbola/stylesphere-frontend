@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   Home,
   About,
@@ -47,6 +47,12 @@ const App = () => {
     };
     checkServerStatus();
   }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    setCartToggle(false);
+  }, [location]);
 
   if (serverError) {
     return (

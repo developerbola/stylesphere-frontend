@@ -30,21 +30,6 @@ export const CartItem: React.FC<{
       <div className="flex flex-col items-end justify-between  h-full">
         <span className="text-xl">${item.price}</span>
         <div className="flex gap-2">
-          <div className="flex items-center">
-            <button
-              // onClick={() => updateQuantity(item.id, -1)}
-              className="px-2"
-            >
-              -
-            </button>
-            <span className="mx-2">{item.quantity}</span>
-            <button
-              // onClick={() => updateQuantity(item.id, 1)}
-              className="px-2"
-            >
-              +
-            </button>
-          </div>
           <button
             onClick={() => handleDeleteProduct(item?._id || "")}
             className="text-red-500"
