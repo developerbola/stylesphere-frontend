@@ -109,7 +109,7 @@ const Profile = () => {
           <button
             onClick={handleSubmit}
             className={clsx(
-              "px-4 bg-gray-950 text-white p-2 rounded-lg disabled:opacity-50",
+              "px-4 bg-gray-950 text-white p-2 rounded-lg disabled:bg-gray-700",
               isSubmitDisable ? "cursor-not-allowed" : "cursor-pointer"
             )}
             disabled={isSubmitDisable}
