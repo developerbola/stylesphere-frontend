@@ -2,6 +2,7 @@ import { useState } from "react";
 import { api } from "../api/api";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
 const SignUp = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -96,11 +97,17 @@ const SignUp = () => {
               />
             </div>
             <button
-              className="w-full bg-gray-900 text-white bg-primary-600 hover:bg-primary-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="w-full bg-gray-900 text-white bg-primary-600 hover:bg-primary-700 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               onClick={handleRegister}
               disabled={loading}
             >
-              {loading ? "Signing Up..." : "Sign Up"}
+              {loading ? (
+                <p className="flex items-center justify-center gap-2 opacity-80">
+                  Signing up <Loader fill="white" size={20} />
+                </p>
+              ) : (
+                "Sign Up"
+              )}
             </button>
             <p className="text-sm font-light text-gray-900">
               Already have an account?{" "}

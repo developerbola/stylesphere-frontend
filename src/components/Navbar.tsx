@@ -81,7 +81,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
               <a onClick={() => navigate("/login")}>
                 <button
                   type="button"
-                  className="text-gray-900 bg-transparent hover:bg-gray-900 hover:text-white hover:border-none border-black border-[1.5px] font-medium rounded-lg text-sm px-6 py-2 text-center"
+                  className="text-gray-900 bg-transparent hover:bg-gray-900 hover:text-white hover:border-transparent border-black border-[1.5px] cursor-pointer font-medium rounded-lg text-sm px-6 py-2 text-center"
                 >
                   Login
                 </button>
