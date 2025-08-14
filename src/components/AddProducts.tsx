@@ -64,7 +64,7 @@ const AddProducts: React.FC<{
             <span className="text-gray-500">$</span>
             <input
               type="number"
-              className="flex-1 ml-2 border-none focus:ring-0 focus:outline-none"
+              className="flex-1 ml-2 border-none focus:ring-0 focus:outline-hidden"
               placeholder="Enter price"
               name="price"
               onChange={handleProductChange}
@@ -72,7 +72,7 @@ const AddProducts: React.FC<{
             />
           </div>
           <select
-            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500 mb-4"
+            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded-md shadow-xs focus:outline-hidden focus:ring-2 focus:ring-slate-500 focus:border-slate-500 mb-4"
             value={newProduct.category || ""}
             onChange={(e) =>
               setNewProduct((prevData) => ({

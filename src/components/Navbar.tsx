@@ -19,8 +19,8 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
 
   if (!doesPathMatch()) return;
   return (
-    <nav className="fixed w-full z-[5] top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto xs:px-10 vxs:px-1 py-6">
+    <nav className="fixed w-full z-5 top-0 start-0 bg-[#ffffffcc] backdrop-blur-[10px]">
+      <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto xs:px-10 vxs:px-1 py-6">
         <a
           onClick={() => navigate("/")}
           className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer xs:w-auto vxs:w-1/3 justify-center"
@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
                 </a>
                 {!isAdmin && (
                   <button
-                    className="text-black outline-none"
+                    className="text-black outline-hidden"
                     onClick={() => setCartToggle(true)}
                   >
                     <img
@@ -67,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
                   <Loader fill="white" className="scale-[40%]" />
                 </button>
                 <button
-                  className="text-black outline-none"
+                  className="text-black outline-hidden"
                   onClick={() => setCartToggle(true)}
                 >
                   <img
@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
           <button
             onClick={handleToggle}
             type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-none"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-hidden"
           >
             <svg
               className="w-5 h-5"
@@ -121,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
                   onClick={() =>
                     navigate(link.split(" ").join("-").toLowerCase())
                   }
-                  className="cursor-pointer block py-2 px-3 text-gray-900 rounded md:hover:bg-transparent md:p-0"
+                  className="cursor-pointer block py-2 px-3 text-gray-900 rounded-sm md:hover:bg-transparent md:p-0"
                 >
                   {link}
                 </a>

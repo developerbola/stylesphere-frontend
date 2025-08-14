@@ -43,8 +43,8 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
   if (!doesPathMatch()) return;
   return (
     <div
-      className={`border-l fixed top-0 min-h-screen lg:w-[30%] md:w-[50%] sm:w-[50%] xs:w-[80%] vxs:w-[95%] p-[20px]  z-[10] bg-[#ffffffcc] backdrop-blur-[15px] ${
-        cartToggle ? "right-0" : "-right-[100%]"
+      className={`border-l fixed top-0 min-h-screen lg:w-[30%] md:w-[50%] sm:w-[50%] xs:w-[80%] vxs:w-[95%] p-[20px]  z-10 bg-[#ffffffcc] backdrop-blur-[15px] ${
+        cartToggle ? "right-0" : "-right-full"
       } transition-right duration-500`}
     >
       {!user ? (
@@ -65,7 +65,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
         <div className="h-screen flex flex-col justify-between pb-10">
           <div>
             <div className="flex justify-between items-center">
-              <h1 className="flex gap-2 items-center text-[1.5rem] font-[600]">
+              <h1 className="flex gap-2 items-center text-[1.5rem] font-semibold">
                 My Cart{" "}
                 <img src="/cart.svg" alt="cart icon" height={20} width={20} />
               </h1>

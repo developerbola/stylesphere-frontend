@@ -17,7 +17,7 @@ const DashboardSidebar = () => {
       <div
         className={`fixed lg:static top-0 left-0 h-screen w-56 p-5 transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 transition-transform duration-300 ease-in-out bg-white z-[99]`}
+        } lg:translate-x-0 transition-transform duration-300 ease-in-out bg-white z-99`}
       >
         <div className="mb-6">
           <Link to={"/"}>
@@ -30,19 +30,19 @@ const DashboardSidebar = () => {
         <nav className="flex flex-col gap-4">
           <Link
             to="/dashboard"
-            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-[6px]"
+            className="p-2 hover:bg-[#f5f5f5] rounded-sm transition flex items-center gap-[6px]"
           >
             <Users size={20} /> Users
           </Link>
           <Link
             to="/dashboard/products"
-            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-[6px]"
+            className="p-2 hover:bg-[#f5f5f5] rounded-sm transition flex items-center gap-[6px]"
           >
             <Package size={20} /> Products
           </Link>
           <Link
             to="/dashboard/categories"
-            className="p-2 hover:bg-[#f5f5f5] rounded transition flex items-center gap-[6px]"
+            className="p-2 hover:bg-[#f5f5f5] rounded-sm transition flex items-center gap-[6px]"
           >
             <ListTree size={20} />
             Categories

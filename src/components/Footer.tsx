@@ -4,7 +4,7 @@ const Footer = () => {
   if (!doesPathMatch(["/"])) return;
   return (
     <footer>
-      <div className="flex flex-col gap-5 mx-auto w-full max-w-screen-xl p-4">
+      <div className="flex flex-col gap-5 mx-auto w-full max-w-7xl p-4">
         <div className="md:flex md:justify-between">
           <div className="flex flex-col gap-5 mb-6 md:mb-0 lg:max-w-[30%] sm:max-w-[50%] vxs:max-w-full">
             <a

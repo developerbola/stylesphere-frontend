@@ -114,7 +114,7 @@ const Edit = () => {
             <span className="text-gray-500">$</span>
             <input
               type="number"
-              className="flex-1 ml-2 border-none focus:ring-0 focus:outline-none"
+              className="flex-1 ml-2 border-none focus:ring-0 focus:outline-hidden"
               placeholder="Enter price"
               name="price"
               onChange={handleChange}
@@ -122,7 +122,7 @@ const Edit = () => {
             />
           </div>
           <select
-            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
+            className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-400 text-gray-700 py-2 px-4 pr-8 rounded-md shadow-xs focus:outline-hidden focus:ring-2 focus:ring-slate-500 focus:border-slate-500"
             value={formData.category || ""}
             onChange={(e) =>
               setFormData((prevData) => ({
@@ -137,7 +137,7 @@ const Edit = () => {
               </option>
             ))}
           </select>
-          <button className="w-full rounded-lg bg-gray-950 text-white p-2 font-semibold focus:outline-none">
+          <button className="w-full rounded-lg bg-gray-950 text-white p-2 font-semibold focus:outline-hidden">
             Edit
           </button>
         </form>

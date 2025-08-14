@@ -127,7 +127,7 @@ const DashboardCategories = () => {
                   {categories?.map((category) => (
                     <tr key={category._id} className="hover:bg-gray-50">
                       <td className="px-6 py-3 whitespace-nowrap">
-                        <div className="flex-shrink-0 h-10 w-10">
+                        <div className="shrink-0 h-10 w-10">
                           <img
                             src={category.image}
                             alt={category.name}

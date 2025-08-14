@@ -70,8 +70,8 @@ const App = () => {
             <Navbar setCartToggle={setCartToggle} />
             <CartSheet cartToggle={cartToggle} setCartToggle={setCartToggle} />
             <div
-              className={`absolute h-screen w-screen backdrop-blur-sm ${
-                cartToggle ? "z-[6]" : "-z-10 opacity-0"
+              className={`absolute h-screen w-screen backdrop-blur-xs ${
+                cartToggle ? "z-6" : "-z-10 opacity-0"
               } transition-all `}
               onClick={() => setCartToggle(false)}
             />

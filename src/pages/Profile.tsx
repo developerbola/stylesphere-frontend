@@ -61,7 +61,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col min-h-screen pt-[100px] xs:px-16 vxs:px-6">
       <h1 className="xs:text-3xl vxs:text-xl font-semibold">Profile Information</h1>
-      <div className="my-5 w-full max-w-md flex flex-col flex-grow">
+      <div className="my-5 w-full max-w-md flex flex-col grow">
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
           <input
@@ -69,7 +69,7 @@ const Profile = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded-sm mt-1"
             placeholder="Enter your name"
           />
         </div>
@@ -80,7 +80,7 @@ const Profile = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded-sm mt-1"
             placeholder="Enter your email"
           />
         </div>
@@ -91,7 +91,7 @@ const Profile = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-2 border rounded mt-1"
+            className="w-full p-2 border rounded-sm mt-1"
             placeholder="Enter your password"
           />
           <button
