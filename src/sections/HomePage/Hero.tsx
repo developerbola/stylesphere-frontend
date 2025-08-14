@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+interface Product {
+  _id: string;
+  image: string;
+  // add other fields if needed
+}
+
 const Hero = () => {
-  const [products, setProducts] = useState<Product[] | null | undefined>(null);
+  const [products, setProducts] = useState<Product[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchdata = async () => {
       setIsLoading(true);
@@ -20,9 +27,10 @@ const Hero = () => {
         }
         const data = await response.json();
         setProducts(data);
-        setIsLoading(false);
       } catch (error: any) {
         console.log("Error fetching products: " + error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchdata();
@@ -30,6 +38,7 @@ const Hero = () => {
 
   return (
     <div className="h-screen flex items-center sm:px-16 vxs:px-0">
+      {/* Left Section */}
       <div className="h-full lg:w-1/2 vxs:w-full flex flex-col gap-3 justify-center">
         <h1 className="font-extrabold w-full text-[2.2rem] xs:text-[2.8rem] sm:text-[3.6rem] lg:text-[4rem]">
           Choose{" "}
@@ -52,35 +61,45 @@ const Hero = () => {
           </button>
         </div>
       </div>
+
+      {/* Right Section */}
       <div
         className="h-full w-1/2 lg:flex vxs:hidden items-center justify-around"
         id="image_container"
       >
-        {products?.slice(0, 2).map((product: Product, index: number) => (
-          <div
-            className={`w-[280px] h-[400px] rounded-3xl group flex items-end justify-center ${
-              index % 2 ? "-mt-16" : "mt-16"
-            } pb-4 transition-all duration-500`}
-            style={{
-              backgroundColor: isLoading ? "#e5e7eb" : undefined, // bg-gray-200 color during loading
-              backgroundImage: isLoading ? "none" : `url(${product.image})`, // No image while loading
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              transition:
-                "background-color 0.5s ease, background-image 0.5s ease",
-            }}
-            key={index}
-          >
-            <a
-              onClick={() => navigate(`/products/${product._id}`)}
-              className="w-2/3"
-            >
-              <button className="cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
-                Discover
-              </button>
-            </a>
-          </div>
-        ))}
+        {isLoading
+          ? // Skeletons while loading
+            Array.from({ length: 2 }).map((_, index) => (
+              <div
+                key={index}
+                className={`w-[280px] h-[400px] rounded-3xl ${
+                  index % 2 ? "-mt-16" : "mt-16"
+                } animate-pulse bg-gray-300`}
+              />
+            ))
+          : // Actual product cards
+            products?.slice(0, 2).map((product: Product, index: number) => (
+              <div
+                className={`w-[280px] h-[400px] rounded-3xl group flex items-end justify-center ${
+                  index % 2 ? "-mt-16" : "mt-16"
+                } pb-4 transition-all duration-500`}
+                style={{
+                  backgroundImage: `url(${product.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                key={product._id}
+              >
+                <a
+                  onClick={() => navigate(`/products/${product._id}`)}
+                  className="w-2/3"
+                >
+                  <button className="cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
+                    Discover
+                  </button>
+                </a>
+              </div>
+            ))}
       </div>
     </div>
   );
