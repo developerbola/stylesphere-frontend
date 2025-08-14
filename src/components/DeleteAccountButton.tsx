@@ -19,7 +19,7 @@ const DeleteAccountButton = () => {
   return (
     <button
       onClick={handleDeleteAcc}
-      className="border border-red-500 py-[7px] px-4 text-red-500 rounded-lg flex items-center gap-2"
+      className="border border-red-500 py-[7px] px-4 text-red-500 rounded-lg flex items-center gap-2 cursor-pointer"
     >
       Delete Account
     </button>

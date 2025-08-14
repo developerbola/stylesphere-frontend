@@ -68,7 +68,7 @@ const Edit = () => {
           Go to the Products page
           <button
             onClick={() => navigate("/products")}
-            className="p-2 px-3 rounded-md bg-gray-950 text-white"
+            className="p-2 px-3 rounded-md bg-gray-950 text-white cursor-pointer"
           >
             Go
           </button>
@@ -137,7 +137,7 @@ const Edit = () => {
               </option>
             ))}
           </select>
-          <button className="w-full rounded-lg bg-gray-950 text-white p-2 font-semibold focus:outline-hidden">
+          <button className="w-full rounded-lg bg-gray-950 text-white p-2 font-semibold focus:outline-hidden cursor-pointer">
             Edit
           </button>
         </form>

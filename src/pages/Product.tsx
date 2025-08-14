@@ -112,13 +112,13 @@ const Product = () => {
                 isAdmin ? (
                   <div className="flex flex-col gap-2">
                     <button
-                      className="bg-gray-800 text-white p-2 rounded-lg"
+                      className="bg-gray-800 text-white p-2 rounded-lg cursor-pointer"
                       onClick={() => navigate(`/edit/${product._id}`)}
                     >
                       Edit Product
                     </button>
                     <button
-                      className="bg-red-500 text-white p-2 rounded-lg"
+                      className="bg-red-500 text-white p-2 rounded-lg cursor-pointer"
                       onClick={() => {
                         deleteProduct(product._id);
                         toast(() => (
@@ -126,7 +126,7 @@ const Product = () => {
                             Go to the Products page
                             <button
                               onClick={() => navigate("/products")}
-                              className="p-2 px-3 rounded-md bg-gray-950 text-white"
+                              className="p-2 px-3 rounded-md bg-gray-950 text-white cursor-pointer"
                             >
                               Go
                             </button>
@@ -144,20 +144,20 @@ const Product = () => {
                         onClick={() =>
                           setQuantity((prev) => Math.max(1, prev - 1))
                         }
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         -
                       </button>
                       <span className="text-xl w-[15px] text-center">{quantity}</span>
                       <button
                         onClick={() => setQuantity((prev) => prev + 1)}
-                        className="px-3 py-2"
+                        className="px-3 py-2 cursor-pointer"
                       >
                         +
                       </button>
                     </div>
                     <button
-                      className="bg-black text-white w-1/2 p-2 rounded-lg"
+                      className="bg-black text-white w-1/2 p-2 rounded-lg cursor-pointer"
                       onClick={handleAddToCart}
                     >
                       Add to Cart
@@ -166,7 +166,7 @@ const Product = () => {
                 )
               ) : (
                 <button
-                  className="bg-black text-white p-2 rounded-lg w-full"
+                  className="bg-black text-white p-2 rounded-lg w-full cursor-pointer"
                   onClick={() => (window.location.href = "/login")}
                 >
                   Login to purchase

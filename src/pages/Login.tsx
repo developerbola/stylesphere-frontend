@@ -120,13 +120,13 @@ const Login: React.FC = () => {
         </div>
         <div className="flex gap-2 justify-center px-4">
           <button
-            className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md"
+            className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md cursor-pointer"
             onClick={handleAdminLogin}
           >
             Login as Admin
           </button>
           <button
-            className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md"
+            className="p-2 w-[45%] text-md text-center bg-gray-900 text-white rounded-md cursor-pointer"
             onClick={handleUserLogin}
           >
             Login as User

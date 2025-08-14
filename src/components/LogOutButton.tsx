@@ -9,7 +9,7 @@ const LogOutButton = () => {
   return (
     <button
       onClick={handleLogOut}
-      className="bg-red-500 p-2 px-4 text-white rounded-lg flex items-center gap-2"
+      className="bg-red-500 p-2 px-4 text-white rounded-lg flex items-center gap-2 cursor-pointer"
     >
       Log Out
       <svg

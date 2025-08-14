@@ -37,7 +37,7 @@ const AddProducts: React.FC<{
     >
       <div>
         <button
-          className="absolute top-5 right-7"
+          className="absolute top-5 right-7 cursor-pointer"
           onClick={() => setToggle(false)}
         >
           <X size={35} />

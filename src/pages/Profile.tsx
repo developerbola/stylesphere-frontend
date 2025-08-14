@@ -4,6 +4,7 @@ import DeleteAccountButton from "../components/DeleteAccountButton";
 import { api } from "../api/api";
 import toast from "react-hot-toast";
 import { useUser } from "../context/UserProvider";
+import clsx from "clsx";
 interface FormUser {
   name: string;
   email: string;
@@ -60,7 +61,9 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col min-h-screen pt-[100px] xs:px-16 vxs:px-6">
-      <h1 className="xs:text-3xl vxs:text-xl font-semibold">Profile Information</h1>
+      <h1 className="xs:text-3xl vxs:text-xl font-semibold">
+        Profile Information
+      </h1>
       <div className="my-5 w-full max-w-md flex flex-col grow">
         <div className="mb-4">
           <label className="block text-gray-700">Name</label>
@@ -97,7 +100,7 @@ const Profile = () => {
           <button
             type="button"
             onClick={() => setShowPass(!showPass)}
-            className="absolute top-[36px] right-0 pr-3 flex items-center text-gray-600"
+            className="absolute top-[36px] right-0 pr-3 flex items-center text-gray-600 cursor-pointer"
           >
             {showPass ? "hide" : "show"}
           </button>
@@ -105,7 +108,10 @@ const Profile = () => {
         <div className="flex gap-2">
           <button
             onClick={handleSubmit}
-            className="px-4 bg-gray-950 text-white p-2 rounded-lg disabled:opacity-50 cursor-not-allowed"
+            className={clsx(
+              "px-4 bg-gray-950 text-white p-2 rounded-lg disabled:opacity-50",
+              isSubmitDisable ? "cursor-not-allowed" : "cursor-pointer"
+            )}
             disabled={isSubmitDisable}
           >
             Save Changes

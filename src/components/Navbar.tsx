@@ -67,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
                   <Loader fill="white" className="scale-[40%]" />
                 </button>
                 <button
-                  className="text-black outline-hidden"
+                  className="text-black outline-hidden cursor-pointer"
                   onClick={() => setCartToggle(true)}
                 >
                   <img
@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
           <button
             onClick={handleToggle}
             type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-hidden"
+            className="cursor-pointer inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg md:hidden hover:bg-gray-100 focus:outline-hidden"
           >
             <svg
               className="w-5 h-5"

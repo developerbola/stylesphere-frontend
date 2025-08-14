@@ -97,7 +97,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
             </div>
           </div>
           <button
-            className={`w-full h-[50px] bg-gray-900 text-white font-semibold rounded-md mt-5 ${
+            className={`w-full h-[50px] cursor-pointer bg-gray-900 text-white font-semibold rounded-md mt-5 ${
               totalPrice ? "" : "cursor-not-allowed"
             }`}
             onClick={() => {

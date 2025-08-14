@@ -2,7 +2,7 @@ import { useState } from "react";
 import { api } from "../api/api";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { Loader } from "lucide-react";
+import Loader from "../components/Loader";
 const SignUp = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");

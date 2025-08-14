@@ -21,7 +21,7 @@ const DashboardSidebar = () => {
       >
         <div className="mb-6">
           <Link to={"/"}>
-            <button className="flex items-center gap-1">
+            <button className="flex items-center gap-1 cursor-pointer">
               <ChevronLeft size={20} /> Back
             </button>
           </Link>

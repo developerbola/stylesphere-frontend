@@ -32,7 +32,7 @@ export const CartItem: React.FC<{
         <div className="flex gap-2">
           <button
             onClick={() => handleDeleteProduct(item?._id || "")}
-            className="text-red-500"
+            className="text-red-500 cursor-pointer"
           >
             <Trash size={18} />
           </button>
