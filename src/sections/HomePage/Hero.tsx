@@ -75,7 +75,7 @@ const Hero = () => {
               onClick={() => navigate(`/products/${product._id}`)}
               className="w-2/3"
             >
-              <button className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
+              <button className="cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity bg-[#00000030] backdrop-blur-md p-3 px-4 w-full rounded-xl text-white z-10">
                 Discover
               </button>
             </a>
