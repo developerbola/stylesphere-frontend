@@ -42,11 +42,11 @@ const Hero = () => {
       <div className="h-full lg:w-1/2 vxs:w-full flex flex-col gap-3 justify-center">
         <h1 className="font-extrabold w-full text-[2.2rem] xs:text-[2.8rem] sm:text-[3.6rem] lg:text-[4rem]">
           Choose{" "}
-          <span className="bg-black text-white px-3 rounded-2xl">Your</span>{" "}
+          <span className="bg-black text-white px-3 vxs:rounded-md sm:rounded-2xl">Your</span>{" "}
           Trendy Collection
         </h1>
         <div className="flex items-center gap-4 w-full lg:w-3/5 pl-3">
-          <div className="h-[80%] w-[10px] sm:w-[18px] rounded-lg bg-gray-900"></div>
+          <div className="h-[80%] w-[10px] md:w-[18px] rounded-lg bg-gray-900"></div>
           <p className="font-semibold text-sm vxs:text-sm sm:text-base lg:text-lg">
             Explore a bold new style that reflects your unique personality.
           </p>
