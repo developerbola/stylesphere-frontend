@@ -104,7 +104,7 @@ const CartSheet: React.FC<CartSheetProps> = ({ cartToggle, setCartToggle }) => {
               totalPrice ? navigate("/checkout") : "";
             }}
           >
-            Checkout
+            Send order
           </button>
         </div>
       )}

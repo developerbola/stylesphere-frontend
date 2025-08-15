@@ -50,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = memo(({ setCartToggle }) => {
                 </a>
                 {!isAdmin && (
                   <button
-                    className="text-black outline-hidden"
+                    className="text-black outline-hidden cursor-pointer"
                     onClick={() => setCartToggle(true)}
                   >
                     <img
